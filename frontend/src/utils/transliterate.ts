@@ -1,8 +1,3 @@
-import { useEffect, useRef, useState } from "react"
-import XMarkIcon from "./icons/XMarkIcon";
-import CopyIcon from "./icons/CopyIcon";
-import CheckIcon from "./icons/CheckIcon";
-
 const MAP = [
 	["KK","ッK"], ["GG","ッG"], ["SS","ッS"], ["ZZ","ッZ"], ["JJ","ッJ"],
 	["TT","ッT"], ["CC","ッC"], ["DD","ッD"], ["HH","ッH"], ["FF","ッF"],
@@ -75,95 +70,55 @@ const MAP = [
 	[".", "。"], [",", "、"], ["-", "ー"]
 ];
 
-function Transliteration() {
-	const [text, setText] = useState('');
-	const [copyButtonText, setCopyButtonText] = useState<"Copy" | "Copied!">('Copy');
 
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const cursorRef = useRef<number | null>(null);
+function transliterate(
+	e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>,
+	// cursorRef: React.RefObject<number>, 
+	inputRef: React.RefObject<HTMLTextAreaElement | HTMLInputElement | null>,
+	setOutput: React.Dispatch<React.SetStateAction<string>>, 
+	textTransform?: boolean
+) {
+	let input = e.currentTarget.value;
 
-  function transliterate(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    let input = e.currentTarget.value;
-    
-    const cursorPos = e.currentTarget.selectionStart;
-    const beforeCursor = input.slice(0, cursorPos);
-    const afterCursor = input.slice(cursorPos);
-		cursorRef.current = cursorPos;
-		
-    for (const [romaji, kana] of MAP) {
-			if (beforeCursor.endsWith(romaji)) {
-				const beforeKana = beforeCursor.slice(0, -romaji.length);
-        input = beforeKana + kana + afterCursor;
-				cursorRef.current = cursorPos - romaji.length + kana.length;
-        break;
-      }
-    }    
+	if (textTransform) {
+		input = input.toLowerCase();
+	}
 
-    setText(input);
+	const cursorPos = e.currentTarget.selectionStart || 0;
+
+  let output = input;
+
+  let newCursorPos = cursorPos;
+
+  const beforeCursor = input.slice(0, cursorPos);
+  const afterCursor = input.slice(cursorPos);
+
+  for (const [romaji, kana] of MAP) {
+    if (beforeCursor.endsWith(romaji)) {
+      const beforeKana = beforeCursor.slice(0, -romaji.length);
+      output = beforeKana + kana + afterCursor;
+      newCursorPos = cursorPos - romaji.length + kana.length;
+      break;
+    }
   }
 
-	useEffect(() => {
-		if (cursorRef.current === null || !textareaRef.current) return;
+	// Using ref also works instead of rAF ref.current updates... But we need to use useEffect in Board component
+	// cursorRef.current = newCursorPos;
 
-		// Cursor not at the end, update cursor position
-		if (cursorRef.current !== textareaRef.current.value.length) {
-			textareaRef.current.setSelectionRange(cursorRef.current, cursorRef.current);
-		}
-	}, [text]);
+	/**
+	 * If we just do this without rAF, it will happen before re-render...
+	 * So it will change back to the end coz of re-render.
+	 * Recall: ref.current updates immediately (synchronous), state updates after next render (asynchronous)
+	 * 
+	 * inputRef.current?.setSelectionRange(newCursorPos, newCursorPos);
+	 */
+	
+	// requestAnimationFrame runs after the browser paints (after React has updated the DOM).
+	requestAnimationFrame(() => {
+		inputRef.current?.setSelectionRange(newCursorPos, newCursorPos);
+	});
 
-
-	async function writeClipboardText() {
-		try {
-			await navigator.clipboard.writeText(text);
-			setCopyButtonText('Copied!');
-			setTimeout(() => setCopyButtonText("Copy"), 2000);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				console.error(error.message);
-			} else {
-				console.error("Unknown error", error);
-			}
-		}
-	}
-
-	function clearText() {
-		setText('');
-		textareaRef.current?.focus();
-	}
-
-	const copyButtonIcon = copyButtonText === 'Copy' ? <CopyIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
-
-  return (
-    <>
-      <textarea 
-        value={text}
-        onChange={transliterate}
-				ref={textareaRef}
-				autoFocus
-      />
-
-			<div className="button-group">
-				<button
-					onClick={writeClipboardText}
-					type="button"
-					className="button"
-					disabled={!text.length ? true : false}
-				>
-					{copyButtonText} 
-					{copyButtonIcon}
-				</button>
-				<button
-					onClick={clearText}
-					type="button"
-					className="button"
-					disabled={!text.length ? true : false}
-				>
-					Clear 
-					<XMarkIcon className="button__icon" />
-				</button>
-			</div>
-    </>
-  );
+	setOutput(output);
 }
 
-export default Transliteration;
+export default transliterate;

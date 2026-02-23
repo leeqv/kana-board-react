@@ -1,6 +1,45 @@
-function KanjiSearch() {
-  const input = 'あか';
-  
+import { useRef, useState } from "react";
+import type { KanjiDictItem } from "../types/KanjiDictItem";
+import transliterate from "../utils/transliterate";
+import ClearButton from "./ClearButton";
+import KanjiCard from "./KanjiCard";
+
+// Prop drilling for KanjiCard component...
+type KanjiSearchType = {
+  // kanaCursorRef: React.RefObject<number>;
+
+  // Modify text after picking kanji card
+  setText: React.Dispatch<React.SetStateAction<string>>;
+
+  // Focus kana textarea after card click (mouse down)
+  kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
+}
+
+function KanjiSearch({
+  // kanaCursorRef,
+  setText,
+  kanaTextareaRef
+} : KanjiSearchType) {
+  const [input, setInput] = useState("");
+  const [results, setResults] = useState<KanjiDictItem[]>([]);
+
+	const inputboxRef = useRef<HTMLInputElement>(null);
+
+  // const cursorRef = useRef<number>(0);
+  // useEffect(() => {
+  //   if (cursorRef.current === null || !inputboxRef.current) return;
+
+  //   // Cursor not at the end, update cursor position
+  //   if (cursorRef.current !== inputboxRef.current.value.length) {
+  //     inputboxRef.current.setSelectionRange(cursorRef.current, cursorRef.current);
+  //   }
+  // }, [input]);
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    transliterate(e, inputboxRef, setInput, true);
+    // transliterate(e, cursorRef, setInput, true);
+  }
+
   async function getData() {
     /**
      * Need to use a backend as a middleman because browsers enforce CORS,
@@ -17,29 +56,56 @@ function KanjiSearch() {
       }
   
       const results = await response.json();
-      console.log(results);
+      setResults(results);
     } catch (error: unknown) {
       if (error instanceof Error) {
 				console.error(error.message);
 			} else {
-				console.error('Unknown error', error);
+				console.error("Unknown error", error);
 			}
     }
   }
 
+  const resultsList = results.map((result, index) => 
+    <KanjiCard
+      key={index}
+      kanji={result.slug}
+      definition={result.definition}
+      setText={setText}
+      // kanaCursorRef={kanaCursorRef}
+      kanaTextareaRef={kanaTextareaRef}
+    />
+  );
+
   return (
     <div className="search">
-      <input 
-        type="text" 
-        className="search__input"
-        />
-      <button 
-        type="button"
-        onClick={getData}
-        disabled={!input.length ? true : false}
-        >
-        Get kanji
-      </button>
+      <div className="search__box">
+        <div className="search__input-box">
+          <input 
+            type="text" 
+            className="search__input"
+            onChange={handleInputChange}
+            value={input}
+            ref={inputboxRef}
+            />
+          <ClearButton
+            input={input}
+            setInput={setInput}
+            inputElementRef={inputboxRef}
+            isIconOnly={true}
+          />
+        </div>
+        <button 
+          type="button"
+          onClick={getData}
+          disabled={!input.length ? true : false}
+          >
+          Get kanji
+        </button>
+      </div>
+      <div className="search__results">
+        {resultsList}
+      </div>
     </div>
   );
 }

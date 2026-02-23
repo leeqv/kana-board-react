@@ -32,6 +32,24 @@ button:disabled {
   width: 140px;
 }
 
+.button--icon-only {
+  position: absolute;
+  top: 0;
+  width: fit-content;
+  padding: 0;
+  border-radius: 50%;
+  bottom: 0;
+  margin: auto;
+  right: 26px;
+  height: fit-content;
+  background: none;
+}
+
+.button--icon-only .button__icon {
+  width: 20px;
+  height: 20px;
+}
+
 .button:disabled .button__icon {
   opacity: 0.4;
 }
@@ -45,7 +63,25 @@ button:disabled {
   margin-top: 50px;
 }
 
+.search__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search__input-box {
+  position: relative;
+  width: fit-content;
+}
+
 .search__input {
-  padding: 0.6em 1.2em;
+  padding: 1em 1.2em;
   margin-right: 20px;
+}
+
+.search__results {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
