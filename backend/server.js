@@ -46,19 +46,30 @@ app.get('/api', async (req, res) => {
 
     const data = kanjiObject.data
       // Get results where the reading and hiragana keyword match exact
-      .filter(({japanese}) => japanese.some(word => word.reading === keyword))
-      // Get the slug and definitions only
-      .map(({slug, senses}) => (
-        {
-          slug,
-          definition: senses[0].english_definitions[0],
+      .filter(({japanese}) => japanese.some(word => word.reading === keyword));
+
+    // 1 kanji can have different forms, ex: ああ - 唖々 can be written as 唖唖. 
+    // So 1 item from jisho data can have more than 1 result item (not 1:1 map).
+    let filteredData = [];
+
+    data.forEach(item => {
+      const definition = item.senses[0].english_definitions[0];
+
+      const kanjis = item.japanese;
+      kanjis.forEach(k => {
+        if (k.word && k.reading === keyword) {
+          filteredData.push({
+            kanji: k.word,
+            definition: definition,
+          });
         }
-      )
-    );
+      });
+    });
 
     // Express res.json(): JS Object ➡ JSON to be sent back to frontend
     // https://expressjs.com/en/api.html#express.json
-    res.json(data);
+    // res.json(data);
+    res.json(filteredData);
   } catch {
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });

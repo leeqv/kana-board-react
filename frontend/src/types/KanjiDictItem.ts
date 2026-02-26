@@ -1,4 +1,4 @@
 export type KanjiDictItem = {
-  slug: string;
+  kanji: string;
   definition: string;
 };
