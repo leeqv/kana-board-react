@@ -84,7 +84,7 @@ function KanjiSearch({
   const resultsMap = results.map((result, index) => 
     <KanjiCard
       key={index}
-      kanji={result.slug}
+      kanji={result.kanji}
       definition={result.definition}
       setText={setText}
       // kanaCursorRef={kanaCursorRef}
