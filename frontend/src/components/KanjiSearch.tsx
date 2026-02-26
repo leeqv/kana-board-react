@@ -3,6 +3,8 @@ import type { KanjiDictItem } from "../types/KanjiDictItem";
 import transliterate from "../utils/transliterate";
 import ClearButton from "./ClearButton";
 import KanjiCard from "./KanjiCard";
+import type { KanjiSearchStatus } from "../types/KanjiSearchStatus";
+import XMarkIcon from "./icons/XMarkIcon";
 
 // Prop drilling for KanjiCard component...
 type KanjiSearchType = {
@@ -22,6 +24,8 @@ function KanjiSearch({
 } : KanjiSearchType) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<KanjiDictItem[]>([]);
+  const [status, setStatus] = useState<KanjiSearchStatus>("idle");
+  const [submittedInput, setSubmittedInput] = useState("");
 
 	const inputboxRef = useRef<HTMLInputElement>(null);
 
@@ -48,6 +52,10 @@ function KanjiSearch({
      * const url = "https://jisho.org/api/v1/search/words?keyword=" + input;
      */
     const url = `http://localhost:8080/api?keyword=${input}`;
+
+    setSubmittedInput(input);
+    setStatus("loading");
+    setResults([]);
     
     try {
       const response = await fetch(url);
@@ -56,17 +64,24 @@ function KanjiSearch({
       }
   
       const results = await response.json();
+      if (results.length > 0) {
+        setStatus("success");
+      } else {
+        setStatus("not-found");
+      }
       setResults(results);
     } catch (error: unknown) {
       if (error instanceof Error) {
-				console.error(error.message);
+				console.error(error);
+        setStatus("connection-error");
 			} else {
-				console.error("Unknown error", error);
+        console.error("Unknown error", error);
+        setStatus("unknown-error");
 			}
     }
   }
 
-  const resultsList = results.map((result, index) => 
+  const resultsMap = results.map((result, index) => 
     <KanjiCard
       key={index}
       kanji={result.slug}
@@ -76,6 +91,61 @@ function KanjiSearch({
       kanaTextareaRef={kanaTextareaRef}
     />
   );
+
+  const closeResultsButton = (
+    <button
+    onClick={() => setStatus("idle")}
+    type="button"
+    className={"button--icon-only search__close-button"}
+    >
+      <XMarkIcon className="button__icon" />
+    </button>
+  );
+
+  const loader = (
+    <div className="search__loader">
+      <div className="search__loader-icon"></div>
+    </div>
+  );
+
+  function showResults() {
+    // Access status state via closure
+
+    if (status === "idle" || status === "loading") return null;
+
+    let mainElement;
+
+    if (status === "success") {
+      mainElement = (
+        <div className="search__results-list">
+          {resultsMap}
+        </div>
+      );
+    } else if (
+      status === "not-found" || 
+      status === "connection-error" || 
+      status === "unknown-error"
+    ) {
+      const infoDict = {
+        "not-found": `No results found for ${submittedInput}. Try something else. 😅`,
+        "connection-error": "Network connection failed. 😓",
+        "unknown-error": "Unknown error occurred. 😓",
+      }
+
+      mainElement = (
+        <div className="search__info">
+          {infoDict[status]}
+        </div>
+      );
+    }
+
+    return (
+      <div className="search__results">
+        {closeResultsButton}
+        {mainElement}
+      </div>
+    );
+  }
 
   return (
     <div className="search">
@@ -103,9 +173,8 @@ function KanjiSearch({
           Get kanji
         </button>
       </div>
-      <div className="search__results">
-        {resultsList}
-      </div>
+      {showResults()}
+      {status === "loading" && loader}
     </div>
   );
 }

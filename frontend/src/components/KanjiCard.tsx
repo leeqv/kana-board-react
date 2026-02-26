@@ -67,6 +67,7 @@ function KanjiCard({
       onMouseDown={clickHandler}
     >
       {kanji}
+      <br/>
       {definition}
     </button>
   );
