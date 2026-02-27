@@ -6,6 +6,7 @@ function KanjiCard({
   // kanaCursorRef,
   setText,
   kanaTextareaRef,
+  showDefinition,
 } : KanjiCardItem) {
 
   function clickHandler(e: React.MouseEvent<HTMLButtonElement>) {
@@ -54,14 +55,22 @@ function KanjiCard({
      */
 	}
 
+  const definitionElement = (
+    <span className="kanji-card__def">
+      {definition}
+    </span>
+  );
+
   return (
     <button 
       type="button"
       onMouseDown={clickHandler}
+      className="kanji-card"
     >
-      {kanji}
-      <br/>
-      {definition}
+      <span className="kanji-card__kanji">
+        {kanji}
+      </span>
+      {showDefinition && definitionElement}
     </button>
   );
 }
