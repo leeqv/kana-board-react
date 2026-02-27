@@ -1,11 +1,4 @@
-export type KanjiCardItem = {
-  kanji: string;
-  definition: string;
-  // kanaCursorRef: React.RefObject<number>;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
-};
-
+import type { KanjiCardItem } from "../types/KanjiCardItem";
 
 function KanjiCard({ 
   kanji,

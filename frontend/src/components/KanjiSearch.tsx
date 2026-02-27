@@ -28,6 +28,8 @@ function KanjiSearch({
   const [submittedInput, setSubmittedInput] = useState("");
 
 	const inputboxRef = useRef<HTMLInputElement>(null);
+	const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
+  // ref: persists between renders (change doesn't cause re-render), let: does not, state: change causes re-renders
 
   // const cursorRef = useRef<number>(0);
   // useEffect(() => {
@@ -45,7 +47,40 @@ function KanjiSearch({
   }
 
   async function getData() {
+    if (
+      // Skip getting new result when the current query matches the previous one...
+      (submittedInput === input)
+      &&
+      // ...and when the results list is not empty.
+      (status !== "idle")
+    ) {
+      return;
+    };
+
+    setSubmittedInput(input);
+
+    // Reset results while loading
+    setStatus("loading");
+    setResults([]);
+    
     /**
+     * Option 1: Find kanji in cached results.
+     * Client side caching to prevent duplicate API requests.
+     */
+    const cachedResult = cachedResultsRef.current[input];
+    if (cachedResult) {
+      if (cachedResult.length > 0) {
+        setStatus("success");
+      } else {
+        setStatus("not-found");
+      }
+      setResults(cachedResult);
+      return;
+    }
+
+    /**
+     * Option 2: Call Jisho API
+     * 
      * Need to use a backend as a middleman because browsers enforce CORS,
      * so React cannot call the Jisho API directly React ↔ Jisho API ❌
      * 
@@ -53,10 +88,6 @@ function KanjiSearch({
      */
     const url = `http://localhost:8080/api?keyword=${input}`;
 
-    setSubmittedInput(input);
-    setStatus("loading");
-    setResults([]);
-    
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -70,6 +101,9 @@ function KanjiSearch({
         setStatus("not-found");
       }
       setResults(results);
+
+      // Client side caching
+      cachedResultsRef.current[input] = results;
     } catch (error: unknown) {
       if (error instanceof Error) {
 				console.error(error);
