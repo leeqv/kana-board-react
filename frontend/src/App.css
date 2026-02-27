@@ -161,3 +161,38 @@ button:disabled {
     box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), -2.6em 0em 0 0em rgba(255,255,255, 0.7), -1.8em -1.8em 0 0em #ffffff;
   }
 }
+
+.search__toggle-def {
+  margin-top: 20px;
+  flex-basis: 100%;
+  font-size: 0.9em;
+}
+
+.search__toggle-def-check {
+  margin-right: 10px;
+}
+
+.search__toggle-def-label {
+  padding: 10px;
+  background: #2b2a33;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  border-radius: 4px;
+}
+
+.kanji-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 170px;
+}
+
+.kanji-card__kanji {
+  font-size: 1.2em;
+  display: block;
+}
+
+.kanji-card__def {
+  font-size: 0.9em;
+}

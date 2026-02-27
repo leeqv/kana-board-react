@@ -26,6 +26,7 @@ function KanjiSearch({
   const [results, setResults] = useState<KanjiDictItem[]>([]);
   const [status, setStatus] = useState<KanjiSearchStatus>("idle");
   const [submittedInput, setSubmittedInput] = useState("");
+  const [showDefinition, setShowDefinition] = useState(false);
 
 	const inputboxRef = useRef<HTMLInputElement>(null);
 	const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
@@ -123,6 +124,7 @@ function KanjiSearch({
       setText={setText}
       // kanaCursorRef={kanaCursorRef}
       kanaTextareaRef={kanaTextareaRef}
+      showDefinition={showDefinition}
     />
   );
 
@@ -206,6 +208,16 @@ function KanjiSearch({
           >
           Get kanji
         </button>
+        <div className="search__toggle-def">
+          <label className="search__toggle-def-label">
+            <input 
+              type="checkbox" 
+              className="search__toggle-def-check"
+              onChange={() => setShowDefinition(s => !s)}
+            />
+            Show definitions
+          </label>
+        </div>
       </div>
       {showResults()}
       {status === "loading" && loader}
