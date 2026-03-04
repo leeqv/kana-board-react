@@ -35,24 +35,29 @@ function Board() {
 
   return (
     <>
-      <textarea 
-        value={text}
-        onChange={handleTextareaChange}
-				ref={textareaRef}
-				autoFocus
-				// onClick={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
-				// onKeyUp={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
-				onBlur={handleTextareaBlur}
-      />
+      <div className="board">
+				<textarea 
+					value={text}
+					onChange={handleTextareaChange}
+					ref={textareaRef}
+					autoFocus
+					// onClick={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
+					// onKeyUp={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
+					onBlur={handleTextareaBlur}
+					className="board__textarea"
+				/>
+				{text.length > 0 && 
+					<ClearButton
+						setInput={setText}
+						inputElementRef={textareaRef}
+						className="board__clear-button"
+					/>
+				}
+			</div>
 
 			<div className="button-group">
 				<CopyButton 
 					text={text}
-				/>
-				<ClearButton 
-					input={text}
-					setInput={setText}
-					inputElementRef={textareaRef}
 				/>
 			</div>
 
