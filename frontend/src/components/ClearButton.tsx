@@ -1,17 +1,14 @@
 import XMarkIcon from "./icons/XMarkIcon";
 
 type CopyType = {
-  input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
   inputElementRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
-  isIconOnly?: boolean;
+  className?: string;
 }
-
 function ClearButton({
-  input,
   setInput,
   inputElementRef,
-  isIconOnly
+  className,
 } : CopyType) {
 
   function clearInput() {
@@ -23,10 +20,8 @@ function ClearButton({
     <button
       onClick={clearInput}
       type="button"
-      className={`button${isIconOnly ? " button--icon-only": ""}`}
-      disabled={!input.length ? true : false}
+      className={`button button--icon-only ${className}`}
     >
-      {!isIconOnly ? "Clear" : ""} 
       <XMarkIcon className="button__icon" />
     </button>
   );

@@ -194,12 +194,13 @@ function KanjiSearch({
             value={input}
             ref={inputboxRef}
             />
-          <ClearButton
-            input={input}
-            setInput={setInput}
-            inputElementRef={inputboxRef}
-            isIconOnly={true}
-          />
+          {input.length > 0 && 
+            <ClearButton
+              setInput={setInput}
+              inputElementRef={inputboxRef}
+              className="search__clear-button"
+            />
+          }
         </div>
         <button 
           type="button"
