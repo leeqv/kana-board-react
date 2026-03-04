@@ -1,15 +1,16 @@
 import XMarkIcon from "./icons/XMarkIcon";
 
-type CopyType = {
+type ClearButtonType = {
   setInput: React.Dispatch<React.SetStateAction<string>>;
   inputElementRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
   className?: string;
 }
+
 function ClearButton({
   setInput,
   inputElementRef,
   className,
-} : CopyType) {
+} : ClearButtonType) {
 
   function clearInput() {
 		setInput("");

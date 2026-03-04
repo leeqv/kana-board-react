@@ -1,6 +1,7 @@
+import { memo } from "react";
 import type { KanjiCardItem } from "../types/KanjiCardItem";
 
-function KanjiCard({ 
+const KanjiCard = memo(function KanjiCard({ 
   kanji,
   definition,
   // kanaCursorRef,
@@ -73,6 +74,6 @@ function KanjiCard({
       {showDefinition && definitionElement}
     </button>
   );
-}
+});
 
 export default KanjiCard;

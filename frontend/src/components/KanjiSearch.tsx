@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import type { KanjiDictItem } from "../types/KanjiDictItem";
 import transliterate from "../utils/transliterate";
 import ClearButton from "./ClearButton";
@@ -17,7 +17,8 @@ type KanjiSearchType = {
   kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
-function KanjiSearch({
+// Memoize to prevent re-render when state in parent changes (will only re-render when props change)
+const KanjiSearch = memo(function KanjiSearch({
   // kanaCursorRef,
   setText,
   kanaTextareaRef
@@ -224,6 +225,6 @@ function KanjiSearch({
       {status === "loading" && loader}
     </div>
   );
-}
+});
 
 export default KanjiSearch;
