@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from "react";
 import type { KanjiDictItem } from "../types/KanjiDictItem";
 import transliterate from "../utils/transliterate";
-import ClearButton from "./ClearButton";
+import ClearButton from "./buttons/ClearButton";
 import KanjiCard from "./KanjiCard";
 import type { KanjiSearchStatus } from "../types/KanjiSearchStatus";
 import XMarkIcon from "./icons/XMarkIcon";

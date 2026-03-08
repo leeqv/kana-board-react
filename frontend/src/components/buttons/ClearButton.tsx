@@ -1,4 +1,4 @@
-import XMarkIcon from "./icons/XMarkIcon";
+import XMarkIcon from "../icons/XMarkIcon";
 
 type ClearButtonType = {
   setInput: React.Dispatch<React.SetStateAction<string>>;
