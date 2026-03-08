@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CopyIcon from "./icons/CopyIcon";
-import CheckIcon from "./icons/CheckIcon";
+import CopyIcon from "../icons/CopyIcon";
+import CheckIcon from "../icons/CheckIcon";
 
 type CopyType = {
   text: string;

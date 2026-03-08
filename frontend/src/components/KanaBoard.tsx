@@ -1,6 +1,6 @@
 import transliterate from "../utils/transliterate";
-import ClearButton from "./ClearButton";
-import CopyButton from "./CopyButton";
+import ClearButton from "./buttons/ClearButton";
+import CopyButton from "./buttons/CopyButton";
 
 type KanaBoardType = {
   text: string;
