@@ -5,6 +5,7 @@ import ClearButton from "./buttons/ClearButton";
 import KanjiCard from "./KanjiCard";
 import type { KanjiSearchStatus } from "../types/KanjiSearchStatus";
 import XMarkIcon from "./icons/XMarkIcon";
+import getJishoData from "../utils/getJishoData";
 
 // Prop drilling for KanjiCard component...
 type KanjiSearchType = {
@@ -19,7 +20,6 @@ type KanjiSearchType = {
 
 // Memoize to prevent re-render when state in parent changes (will only re-render when props change)
 const KanjiSearch = memo(function KanjiSearch({
-  // kanaCursorRef,
   setText,
   kanaTextareaRef
 } : KanjiSearchType) {
@@ -31,131 +31,83 @@ const KanjiSearch = memo(function KanjiSearch({
 
 	const inputboxRef = useRef<HTMLInputElement>(null);
 	const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
-  // ref: persists between renders (change doesn't cause re-render), let: does not, state: change causes re-renders
-
-  // const cursorRef = useRef<number>(0);
-  // useEffect(() => {
-  //   if (cursorRef.current === null || !inputboxRef.current) return;
-
-  //   // Cursor not at the end, update cursor position
-  //   if (cursorRef.current !== inputboxRef.current.value.length) {
-  //     inputboxRef.current.setSelectionRange(cursorRef.current, cursorRef.current);
-  //   }
-  // }, [input]);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     transliterate(e, inputboxRef, setInput, true);
-    // transliterate(e, cursorRef, setInput, true);
   }
 
-  async function getData() {
+  async function handleSearchButtonClick() {
     if (
-      // Skip getting new result when the current query matches the previous one...
-      (submittedInput === input)
-      &&
-      // ...and when the results list is not empty.
-      (status !== "idle")
+      // Get new result when the current query is different from the previous one...
+      (submittedInput !== input)
+      ||
+      // ...or when the results list is still empty.
+      (status === "idle")
     ) {
-      return;
-    };
+      setSubmittedInput(input);
 
-    setSubmittedInput(input);
+      // Reset results while loading
+      setStatus("loading");
+      setResults([]);
 
-    // Reset results while loading
-    setStatus("loading");
-    setResults([]);
-    
-    /**
-     * Option 1: Find kanji in cached results.
-     * Client side caching to prevent duplicate API requests.
-     */
-    const cachedResult = cachedResultsRef.current[input];
-    if (cachedResult) {
-      if (cachedResult.length > 0) {
+      let foundResult = [];
+      let foundError:unknown;
+
+      /**
+       * Option 1: Find kanji in cached results.
+       * Client side caching to prevent duplicate API requests.
+       */
+      const cachedResult = cachedResultsRef.current[input];
+      if (cachedResult) {
+        foundResult = cachedResult;
+      } else {
+        /**
+         * Option 2: Call Jisho API
+         */
+        const [jishoResult, jishoError] = await getJishoData(
+          input,
+        );
+        foundResult = jishoResult;
+        foundError = jishoError;
+        cachedResultsRef.current[input] = jishoResult;
+      }
+
+      if (foundResult.length > 0) {
         setStatus("success");
+      } else if (foundError) {
+        if (foundError instanceof Error) {
+          console.error(foundError);
+          setStatus("connection-error");
+        } else {
+          console.error("Unknown error", foundError);
+          setStatus("unknown-error");
+        }
       } else {
         setStatus("not-found");
       }
-      setResults(cachedResult);
-      return;
-    }
 
-    /**
-     * Option 2: Call Jisho API
-     * 
-     * Need to use a backend as a middleman because browsers enforce CORS,
-     * so React cannot call the Jisho API directly React ↔ Jisho API ❌
-     * 
-     * const url = "https://jisho.org/api/v1/search/words?keyword=" + input;
-     */
-    const url = `http://localhost:8080/api?keyword=${input}`;
-
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-  
-      const results = await response.json();
-      if (results.length > 0) {
-        setStatus("success");
-      } else {
-        setStatus("not-found");
-      }
-      setResults(results);
-
-      // Client side caching
-      cachedResultsRef.current[input] = results;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-				console.error(error);
-        setStatus("connection-error");
-			} else {
-        console.error("Unknown error", error);
-        setStatus("unknown-error");
-			}
+      setResults(foundResult);
     }
   }
-
-  const resultsMap = results.map((result, index) => 
-    <KanjiCard
-      key={index}
-      kanji={result.kanji}
-      definition={result.definition}
-      setText={setText}
-      // kanaCursorRef={kanaCursorRef}
-      kanaTextareaRef={kanaTextareaRef}
-      showDefinition={showDefinition}
-    />
-  );
-
-  const closeResultsButton = (
-    <button
-    onClick={() => setStatus("idle")}
-    type="button"
-    className={"button--icon-only search__close-button"}
-    >
-      <XMarkIcon className="button__icon" />
-    </button>
-  );
-
-  const loader = (
-    <div className="search__loader">
-      <div className="search__loader-icon"></div>
-    </div>
-  );
 
   function showResults() {
-    // Access status state via closure
-
-    if (status === "idle" || status === "loading") return null;
-
     let mainElement;
 
     if (status === "success") {
       mainElement = (
         <div className="search__results-list">
-          {resultsMap}
+          {
+            results.map((result, index) => 
+              <KanjiCard
+                key={index}
+                kanji={result.kanji}
+                definition={result.definition}
+                setText={setText}
+                kanaTextareaRef={kanaTextareaRef}
+                showDefinition={showDefinition}
+              />
+            )
+          }
         </div>
       );
     } else if (
@@ -178,8 +130,16 @@ const KanjiSearch = memo(function KanjiSearch({
 
     return (
       <div className="search__results">
-        {closeResultsButton}
-        {mainElement}
+        {
+          <button
+            onClick={() => setStatus("idle")}
+            type="button"
+            className={"button--icon-only search__close-button"}
+          >
+            <XMarkIcon className="button__icon" />
+          </button>
+        }
+        { mainElement }
       </div>
     );
   }
@@ -205,7 +165,7 @@ const KanjiSearch = memo(function KanjiSearch({
         </div>
         <button 
           type="button"
-          onClick={getData}
+          onClick={handleSearchButtonClick}
           disabled={!input.length ? true : false}
           >
           Get kanji
@@ -221,8 +181,14 @@ const KanjiSearch = memo(function KanjiSearch({
           </label>
         </div>
       </div>
-      {showResults()}
-      {status === "loading" && loader}
+
+      {(status !== "idle" && status !== "loading") && showResults()}
+
+      {status === "loading" && (
+        <div className="search__loader">
+          <div className="search__loader-icon"></div>
+        </div>
+      )}
     </div>
   );
 });
