@@ -4,9 +4,13 @@ import CheckIcon from "../icons/CheckIcon";
 
 type CopyType = {
   text: string;
+  isIconOnly?: boolean;
 }
 
-function CopyButton({ text } : CopyType) {
+function CopyButton({ 
+  text,
+  isIconOnly,
+} : CopyType) {
   const [copyButtonText, setCopyButtonText] = useState<"Copy" | "Copied!">("Copy");
 	const copyButtonIcon = copyButtonText === "Copy" ? <CopyIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
   
@@ -28,10 +32,10 @@ function CopyButton({ text } : CopyType) {
     <button
       onClick={writeClipboardText}
       type="button"
-      className="button"
+      className={`button ${isIconOnly && 'button--small'}`}
       disabled={!text.length ? true : false}
     >
-      {copyButtonText} 
+      {!isIconOnly && copyButtonText} 
       {copyButtonIcon}
     </button>
   );
