@@ -1,17 +1,22 @@
+import { useState } from "react";
 import transliterate from "../utils/transliterate";
 import ClearButton from "./buttons/ClearButton";
 import CopyButton from "./buttons/CopyButton";
+import HeartIcon from "./icons/HeartIcon";
+import CheckIcon from "./icons/CheckIcon";
 
 type KanaBoardType = {
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+	setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function KanaBoard({
   text,
   setText,
   textareaRef,
+	setFavorites,
 } : KanaBoardType ) {
 
 	// We can just use rAF ref.current updates instead of using a ref for cursor index...
@@ -37,9 +42,24 @@ function KanaBoard({
 		textareaRef.current?.setSelectionRange(text.length, text.length)
 	}
 
+	const [faveButtonText, setfaveButtonText] = useState<"Save" | "Saved!">("Save");
+	const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
+  
+	function addToFavorites() {
+		setFavorites(faves => {
+			if (!faves.includes(text)) {
+				return [...faves, text];
+			} else {
+				return faves;
+			}
+		})
+		setfaveButtonText("Saved!");
+		setTimeout(() => setfaveButtonText("Save"), 2000);
+	}
+
   return (
-    <>
-      <div className="board">
+    <div className="board">
+      <div className="board__box">
 				<textarea 
 					value={text}
 					onChange={handleTextareaChange}
@@ -58,12 +78,21 @@ function KanaBoard({
 					/>
 				}
 			</div>
-      <div className="button-group">
+      <div className="button-group board__actions">
 				<CopyButton 
 					text={text}
 				/>
+				<button
+					onClick={addToFavorites}
+					type="button"
+					className="button"
+					disabled={!text.length ? true : false}
+				>
+					{faveButtonText}
+					{faveButtonIcon}
+				</button>
 			</div>
-    </>
+    </div>
   );
 
 }

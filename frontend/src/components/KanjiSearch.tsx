@@ -13,7 +13,7 @@ type KanjiSearchType = {
 
   // Modify text after picking kanji card
   setText: React.Dispatch<React.SetStateAction<string>>;
-
+  
   // Focus kana textarea after card click (mouse down)
   kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
@@ -21,7 +21,7 @@ type KanjiSearchType = {
 // Memoize to prevent re-render when state in parent changes (will only re-render when props change)
 const KanjiSearch = memo(function KanjiSearch({
   setText,
-  kanaTextareaRef
+  kanaTextareaRef,
 } : KanjiSearchType) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<KanjiDictItem[]>([]);
@@ -134,7 +134,7 @@ const KanjiSearch = memo(function KanjiSearch({
           <button
             onClick={() => setStatus("idle")}
             type="button"
-            className={"button--icon-only search__close-button"}
+            className={"button button--icon-only search__close-button"}
           >
             <XMarkIcon className="button__icon" />
           </button>
