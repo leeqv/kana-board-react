@@ -328,6 +328,9 @@ button:disabled {
 }
 
 .drawer-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
   background: no-repeat;
   display: flex;
   flex-direction: column;
