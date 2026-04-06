@@ -26,11 +26,12 @@ const KanjiSearch = memo(function KanjiSearch({
   const [input, setInput] = useState("");
   const [results, setResults] = useState<KanjiDictItem[]>([]);
   const [status, setStatus] = useState<KanjiSearchStatus>("idle");
-  const [submittedInput, setSubmittedInput] = useState("");
   const [showDefinition, setShowDefinition] = useState(false);
 
 	const inputboxRef = useRef<HTMLInputElement>(null);
 	const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
+	const previousInputRef = useRef<string>("");
+  const previousInput = previousInputRef.current;
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     transliterate(e, inputboxRef, setInput, true);
@@ -39,12 +40,12 @@ const KanjiSearch = memo(function KanjiSearch({
   async function handleSearchButtonClick() {
     if (
       // Get new result when the current query is different from the previous one...
-      (submittedInput !== input)
+      (previousInput !== input)
       ||
       // ...or when the results list is still empty.
       (status === "idle")
     ) {
-      setSubmittedInput(input);
+      previousInputRef.current = input
 
       // Reset results while loading
       setStatus("loading");
@@ -116,7 +117,7 @@ const KanjiSearch = memo(function KanjiSearch({
       status === "unknown-error"
     ) {
       const infoDict = {
-        "not-found": `No results found for ${submittedInput}. Try something else. 😅`,
+        "not-found": `No results found for ${input}. Try something else. 😅`,
         "connection-error": "Network connection failed. 😓",
         "unknown-error": "Unknown error occurred. 😓",
       }
@@ -166,7 +167,7 @@ const KanjiSearch = memo(function KanjiSearch({
         <button 
           type="button"
           onClick={handleSearchButtonClick}
-          disabled={!input.length ? true : false}
+          disabled={(!input.length || (status === "loading")) ? true : false}
           >
           Get kanji
         </button>
