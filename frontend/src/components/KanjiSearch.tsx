@@ -16,12 +16,15 @@ type KanjiSearchType = {
   
   // Focus kana textarea after card click (mouse down)
   kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
+
+  setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
 }
 
 // Memoize to prevent re-render when state in parent changes (will only re-render when props change)
 const KanjiSearch = memo(function KanjiSearch({
   setText,
   kanaTextareaRef,
+  setFavoriteKanjis,
 } : KanjiSearchType) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<KanjiDictItem[]>([]);
@@ -101,11 +104,11 @@ const KanjiSearch = memo(function KanjiSearch({
             results.map((result, index) => 
               <KanjiCard
                 key={index}
-                kanji={result.kanji}
-                definition={result.definition}
+                entry={result}
                 setText={setText}
                 kanaTextareaRef={kanaTextareaRef}
                 showDefinition={showDefinition}
+                setFavoriteKanjis={setFavoriteKanjis}
               />
             )
           }

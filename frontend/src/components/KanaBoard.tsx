@@ -1,9 +1,7 @@
-import { useState } from "react";
 import transliterate from "../utils/transliterate";
 import ClearButton from "./buttons/ClearButton";
 import CopyButton from "./buttons/CopyButton";
-import HeartIcon from "./icons/HeartIcon";
-import CheckIcon from "./icons/CheckIcon";
+import FaveButton from "./buttons/FaveButton";
 
 type KanaBoardType = {
   text: string;
@@ -42,20 +40,20 @@ function KanaBoard({
 		textareaRef.current?.setSelectionRange(text.length, text.length)
 	}
 
-	const [faveButtonText, setfaveButtonText] = useState<"Save" | "Saved!">("Save");
-	const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
+	// const [faveButtonText, setfaveButtonText] = useState<"Save" | "Saved!">("Save");
+	// const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
   
-	function addToFavorites() {
-		setFavorites(faves => {
-			if (!faves.includes(text)) {
-				return [...faves, text];
-			} else {
-				return faves;
-			}
-		})
-		setfaveButtonText("Saved!");
-		setTimeout(() => setfaveButtonText("Save"), 2000);
-	}
+	// function addToFavorites() {
+	// 	setFavorites(faves => {
+	// 		if (!faves.includes(text)) {
+	// 			return [...faves, text];
+	// 		} else {
+	// 			return faves;
+	// 		}
+	// 	})
+	// 	setfaveButtonText("Saved!");
+	// 	setTimeout(() => setfaveButtonText("Save"), 2000);
+	// }
 
   return (
     <div className="board">
@@ -82,15 +80,11 @@ function KanaBoard({
 				<CopyButton 
 					text={text}
 				/>
-				<button
-					onClick={addToFavorites}
-					type="button"
-					className="button"
+				<FaveButton<string>
+					value={text}
+					setFavorites={setFavorites}
 					disabled={!text.length ? true : false}
-				>
-					{faveButtonText}
-					{faveButtonIcon}
-				</button>
+				/>
 			</div>
     </div>
   );

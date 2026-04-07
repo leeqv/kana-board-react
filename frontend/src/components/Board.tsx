@@ -2,13 +2,16 @@
 import { useRef, useState } from "react"
 import KanjiSearch from "./KanjiSearch";
 import KanaBoard from "./KanaBoard";
+import type { KanjiCardItem } from "../types/KanjiCardItem";
 
 type BoardType = {
 	setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
+	setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
 }
 
 function Board({
 	setFavorites,
+	setFavoriteKanjis,
 } : BoardType) {
 	const [text, setText] = useState("");
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -26,6 +29,7 @@ function Board({
 				// kanaCursorRef={cursorRef}
 				setText={setText}
 				kanaTextareaRef={textareaRef}
+				setFavoriteKanjis={setFavoriteKanjis}
 			/>
     </>
   );

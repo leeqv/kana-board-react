@@ -71,6 +71,15 @@ aside.hidden {
   min-width: 250px;
 }
 
+.drawer__section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.drawer__heading {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
 .board,
 .board__box {
   position: relative;
@@ -313,6 +322,10 @@ button:disabled {
   font-size: 0.9em;
 }
 
+.kanji-card__fave {
+  margin: 10px auto;
+}
+
 .fave-card {
   display: flex;
   justify-content: space-between;
@@ -325,6 +338,14 @@ button:disabled {
 
 .fave-card__text {
   width: 135px;
+}
+
+.fave-card__kanji {
+  font-size: 18px;
+}
+
+.fave-card__def {
+  font-size: 13px;
 }
 
 .drawer-toggle {
