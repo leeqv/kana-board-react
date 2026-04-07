@@ -1,14 +1,18 @@
 import { memo } from "react";
 import type { KanjiCardItem } from "../types/KanjiCardItem";
+import FaveButton from "./buttons/FaveButton";
+import type { KanjiDictItem } from "../types/KanjiDictItem";
 
 const KanjiCard = memo(function KanjiCard({ 
-  kanji,
-  definition,
+  entry,
   // kanaCursorRef,
   setText,
   kanaTextareaRef,
   showDefinition,
+  setFavoriteKanjis,
 } : KanjiCardItem) {
+
+  const {kanji, definition} = entry;
 
   function clickHandler(e: React.MouseEvent<HTMLButtonElement>) {
     /**
@@ -63,16 +67,25 @@ const KanjiCard = memo(function KanjiCard({
   );
 
   return (
-    <button 
-      type="button"
-      onMouseDown={clickHandler}
-      className="kanji-card"
-    >
-      <span className="kanji-card__kanji">
-        {kanji}
-      </span>
-      {showDefinition && definitionElement}
-    </button>
+    <div>
+      <button 
+        type="button"
+        onMouseDown={clickHandler}
+        className="kanji-card"
+      >
+        <span className="kanji-card__kanji">
+          {kanji}
+        </span>
+        {showDefinition && definitionElement}
+      </button>
+      <FaveButton<KanjiDictItem>
+        value={entry}
+        setFavorites={setFavoriteKanjis}
+        disabled={false}
+        isIconOnly={true}
+        className="kanji-card__fave"
+      />
+    </div>
   );
 });
 
