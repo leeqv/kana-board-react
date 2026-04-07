@@ -1,7 +1,3 @@
-// import { useState } from "react";
-// import FaveIcon from "../icons/FaveIcon";
-// import CheckIcon from "../icons/CheckIcon";
-
 import { useState } from "react";
 import HeartIcon from "../icons/HeartIcon";
 import CheckIcon from "../icons/CheckIcon";

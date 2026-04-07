@@ -1,20 +1,22 @@
-// import { useEffect, useRef, useState } from "react"
-import { useRef, useState } from "react"
 import KanjiSearch from "./KanjiSearch";
 import KanaBoard from "./KanaBoard";
-import type { KanjiCardItem } from "../types/KanjiCardItem";
+import type { KanjiDictItem } from "../types/KanjiDictItem";
 
 type BoardType = {
 	setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
 	setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
+	text: string;
+	setText: React.Dispatch<React.SetStateAction<string>>;
+	textareaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 function Board({
 	setFavorites,
 	setFavoriteKanjis,
+	text,
+	setText,
+	textareaRef,
 } : BoardType) {
-	const [text, setText] = useState("");
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <>
