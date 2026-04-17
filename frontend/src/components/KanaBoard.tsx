@@ -67,23 +67,27 @@ function KanaBoard({
 					// onKeyUp={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
 					onBlur={handleTextareaBlur}
 					className="board__textarea"
+					placeholder="Type in lowercase for hiragana. Type in UPPERCASE for katakana."
 				/>
 				{text.length > 0 && 
 					<ClearButton
 						setInput={setText}
 						inputElementRef={textareaRef}
-						className="board__clear-button"
+						className="btn-icon board__button board__button--clear"
+					/>
+				}
+				{text.length > 0 &&
+					<FaveButton<string>
+						value={text}
+						setFavorites={setFavorites}
+						disabled={!text.length ? true : false}
+						className="btn-icon board__button board__button--fave"
 					/>
 				}
 			</div>
       <div className="button-group board__actions">
 				<CopyButton 
 					text={text}
-				/>
-				<FaveButton<string>
-					value={text}
-					setFavorites={setFavorites}
-					disabled={!text.length ? true : false}
 				/>
 			</div>
     </div>

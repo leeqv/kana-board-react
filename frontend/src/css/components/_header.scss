@@ -1,0 +1,26 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+header {
+  position: fixed;
+  padding: 10px 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+
+  h1 {
+    font-size: 16px;
+    @include mq.sp {
+      font-size: 14px;
+    }
+  }
+}

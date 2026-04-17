@@ -8,6 +8,7 @@ type BoardType = {
 	text: string;
 	setText: React.Dispatch<React.SetStateAction<string>>;
 	textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+	favoriteKanjis: KanjiDictItem[];
 }
 
 function Board({
@@ -16,6 +17,7 @@ function Board({
 	text,
 	setText,
 	textareaRef,
+	favoriteKanjis,
 } : BoardType) {
 
   return (
@@ -32,6 +34,7 @@ function Board({
 				setText={setText}
 				kanaTextareaRef={textareaRef}
 				setFavoriteKanjis={setFavoriteKanjis}
+				favoriteKanjis={favoriteKanjis}
 			/>
     </>
   );

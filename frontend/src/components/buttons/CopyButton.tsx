@@ -12,7 +12,7 @@ function CopyButton({
   isIconOnly,
 } : CopyType) {
   const [copyButtonText, setCopyButtonText] = useState<"Copy" | "Copied!">("Copy");
-	const copyButtonIcon = copyButtonText === "Copy" ? <CopyIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
+	const copyButtonIcon = copyButtonText === "Copy" ? <CopyIcon className={`${isIconOnly ? ' icon' : 'button__icon'}`} /> : <CheckIcon className={`${isIconOnly ? ' icon' : 'button__icon'}`} />;
   
   async function writeClipboardText() {		
 		try {
@@ -32,7 +32,7 @@ function CopyButton({
     <button
       onClick={writeClipboardText}
       type="button"
-      className={`button ${isIconOnly && 'button--small'}`}
+      className={`${isIconOnly ? ' btn-icon' : 'button'}`}
       disabled={!text.length ? true : false}
     >
       {!isIconOnly && copyButtonText} 

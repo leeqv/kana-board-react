@@ -1,0 +1,19 @@
+@use '../settings/screen-sizes' as screen-sizes;
+
+@mixin center($disp: flex, $align: center, $justify: center) {
+  display: $disp;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin max-width($pad: 4%, $side: 8%, $max: screen-sizes.$max-width) {
+  padding-inline: $pad;
+  margin-inline: auto;
+  width: 100%;
+  max-width: calc($max + $side);
+  box-sizing: border-box;
+  @media screen and (max-width: screen-sizes.$sp-width) {
+    max-width: 100%;
+    padding-inline: screen-sizes.$spad;
+  }
+}

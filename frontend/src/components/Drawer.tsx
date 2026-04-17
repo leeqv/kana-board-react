@@ -40,67 +40,75 @@ const Drawer = memo(function Drawer({
           drawerVisibility={drawerVisibility}
           setDrawerVisibility={setDrawerVisibility}
           />
+        
+        <div className="drawer__container">
+          <section className="drawer__section">
+            {favorites.length > 0 && (<h3 className="drawer__heading">Phrases</h3>)}
 
-        <section className="drawer__section">
-          {favorites.length > 0 && (<h3 className="drawer__heading">Phrases</h3>)}
-
-          <div>
-            {favorites.map((fave, index) => (
-              <div 
-                key={index}
-                className="fave-card"
-              >
-                <div className="fave-card__text">
-                  {fave}
+            <div>
+              {favorites.map((fave, index) => (
+                <div 
+                  key={index}
+                  className="fave-card"
+                >
+                  <div className="fave-card__text">
+                    {fave}
+                  </div>
+                  <div className="fave-card__actions">
+                    <button 
+                      className="btn-icon"
+                      onMouseDown={(e) => insertToText(e, fave, textareaRef, setText)}
+                      >
+                      <InsertIcon className="icon"/>
+                    </button>
+                    <CopyButton text={fave} isIconOnly={true}/>
+                    <button 
+                      className="btn-icon"
+                      onClick={() => handleDelete(fave)}
+                      >
+                      <XMarkIcon className="icon"/>
+                    </button>
+                  </div>
                 </div>
-                <button 
-                  className="button button--small"
-                  onMouseDown={(e) => insertToText(e, fave, textareaRef, setText)}
-                  >
-                  <InsertIcon className="button__icon"/>
-                </button>
-                <CopyButton text={fave} isIconOnly={true}/>
-                <button 
-                  className="button button--small"
-                  onClick={() => handleDelete(fave)}
-                  >
-                  <XMarkIcon className="button__icon"/>
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <section className="drawer__section">
-          {favoriteKanjis.length > 0 && (<h3 className="drawer__heading">Kanji</h3>)}
+          {favoriteKanjis.length > 0 &&
+            <section className="drawer__section">
+              {favoriteKanjis.length > 0 && (<h3 className="drawer__heading">Kanji</h3>)}
 
-          <div>
-            {favoriteKanjis.map((fave, index) => (
-              <div 
-                key={index}
-                className="fave-card"
-              >
-                <div className="fave-card__text">
-                  <div className="fave-card__kanji">{fave.kanji}</div>
-                  <div className="fave-card__def">{fave.definition}</div>
-                </div>
-                <button 
-                  className="button button--small"
-                  onMouseDown={(e) => insertToText(e, fave.kanji, textareaRef, setText)}
+              <div>
+                {favoriteKanjis.map((fave, index) => (
+                  <div 
+                    key={index}
+                    className="fave-card"
                   >
-                  <InsertIcon className="button__icon"/>
-                </button>
-                <CopyButton text={fave.kanji} isIconOnly={true}/>
-                <button 
-                  className="button button--small"
-                  onClick={() => handleDeleteKanji(fave)}
-                  >
-                  <XMarkIcon className="button__icon"/>
-                </button>
+                    <div className="fave-card__text">
+                      <div className="fave-card__kanji">{fave.kanji}</div>
+                      <div className="fave-card__def">{fave.definition}</div>
+                    </div>
+                    <div className="fave-card__actions">
+                      <button 
+                        className="btn-icon"
+                        onMouseDown={(e) => insertToText(e, fave.kanji, textareaRef, setText)}
+                        >
+                        <InsertIcon className="icon"/>
+                      </button>
+                      <CopyButton text={fave.kanji} isIconOnly={true}/>
+                      <button 
+                        className="btn-icon"
+                        onClick={() => handleDeleteKanji(fave)}
+                        >
+                        <XMarkIcon className="icon"/>
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+          }
+        </div>
       </div>
     </aside>
   )

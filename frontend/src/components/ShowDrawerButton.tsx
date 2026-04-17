@@ -19,17 +19,18 @@ function ShowDrawerButton({
 
   return (
     <button 
-      className="drawer-toggle"
+      className="drawer__toggle"
       onClick={showDrawer}
+      type="button"
       >
-      <div 
-        className={`header__button ${className}`}
+      <span 
+        className={`drawer__toggle-btn-icon btn-icon ${className}`}
       >
         { drawerVisibility 
-          ? <XMarkIcon className="button__icon" />
-          : <HeartIcon className="button__icon" />
+          ? <XMarkIcon className="icon" />
+          : <HeartIcon className="icon" />
         }
-      </div>
+      </span>
       Favorites
     </button>
   );

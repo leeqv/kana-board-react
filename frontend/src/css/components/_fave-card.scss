@@ -1,0 +1,46 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+.fave-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+    @include mq.sp {
+      margin-bottom: 5px;
+    }
+  }
+
+  &__text {
+    padding-top: 6px;
+    width: 135px;
+    font-size: 16px;
+    @include mq.sp {
+      font-size: 14px;
+    }
+  }
+
+  &__kanji {
+    font-size: 18px;
+    @include mq.sp {
+      font-size: 16px;
+    }
+  }
+
+  &__def {
+    font-size: 13px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 4px;
+  }
+}

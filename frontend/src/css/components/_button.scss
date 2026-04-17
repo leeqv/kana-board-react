@@ -1,0 +1,144 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.button {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 0.6em 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: fw.$semibold;
+  letter-spacing: 0.05em;
+  background-color: clr.$lightblue;
+  color: clr.$white;
+  transition: 0.2s ease;
+  transform: translateY(-2.5px);
+  filter: drop-shadow(0 5px 0 clr.$blue-6b);
+  cursor: pointer;
+  @include mq.sp {
+    font-size: 14px;
+  }
+
+  &:disabled {
+    background: clr.$gray-d2;
+    filter: drop-shadow(0 5px 0 clr.$gray-bc);
+  }
+
+  &:hover {
+    transform: translateY(-4.5px);
+    filter: drop-shadow(0 7px 0 clr.$blue-6b);
+    background: clr.$blue-8d;
+  }
+
+  &:active {
+    filter: drop-shadow(0 0 0 clr.$blue-6b);
+    transform: translateY(2.5px);
+  }
+
+  &.loading {
+    cursor: wait;
+  }
+
+  &:disabled {
+    pointer-events: none;
+
+    .button__icon {
+      opacity: 0.4;
+    }
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    @include mq.sp {
+      width: 18px;
+      height: 18px;
+    }
+
+    path {
+      stroke: clr.$white;
+    }
+  }
+}
+
+.btn-icon {
+  $p: &;
+
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  position: relative;
+  width: 34px;
+  aspect-ratio: 1;
+  transition: 0.2s ease;
+  cursor: pointer;
+  background: none;
+  @include mxn.center;
+  @include mq.sp {
+    width: 28px;
+  }
+
+  &:hover {
+    background: clr.$gray-de;
+  }
+
+  &:active {
+    background: clr.$gray;
+  }
+
+  &__tooltip {
+    border-radius: 2px;
+    padding: 4px 8px;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    font-size: 10px;
+    font-weight: fw.$medium;
+    white-space: nowrap;
+    color: clr.$white;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s ease;
+    background: clr.$text;
+
+    &::after {
+      content: '';
+      border-style: solid;
+      border-width: 6px 5px 0;
+      border-color: clr.$text transparent transparent transparent;
+      margin: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      width: 0;
+      height: 0;
+    }
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &.active {
+    path {
+      fill: clr.$text;
+    }
+  }
+}

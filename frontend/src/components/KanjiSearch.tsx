@@ -6,6 +6,7 @@ import KanjiCard from "./KanjiCard";
 import type { KanjiSearchStatus } from "../types/KanjiSearchStatus";
 import XMarkIcon from "./icons/XMarkIcon";
 import getJishoData from "../utils/getJishoData";
+import ArrowIcon from "./icons/ArrowIcon";
 
 // Prop drilling for KanjiCard component...
 type KanjiSearchType = {
@@ -17,6 +18,7 @@ type KanjiSearchType = {
   // Focus kana textarea after card click (mouse down)
   kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
 
+  favoriteKanjis: KanjiDictItem[];
   setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
 }
 
@@ -25,6 +27,7 @@ const KanjiSearch = memo(function KanjiSearch({
   setText,
   kanaTextareaRef,
   setFavoriteKanjis,
+  favoriteKanjis,
 } : KanjiSearchType) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState<KanjiDictItem[]>([]);
@@ -76,7 +79,7 @@ const KanjiSearch = memo(function KanjiSearch({
         cachedResultsRef.current[input] = jishoResult;
       }
 
-      if (foundResult.length > 0) {
+      if (foundResult && foundResult.length > 0) {
         setStatus("success");
       } else if (foundError) {
         if (foundError instanceof Error) {
@@ -109,6 +112,7 @@ const KanjiSearch = memo(function KanjiSearch({
                 kanaTextareaRef={kanaTextareaRef}
                 showDefinition={showDefinition}
                 setFavoriteKanjis={setFavoriteKanjis}
+                favoriteKanjis={favoriteKanjis}
               />
             )
           }
@@ -138,9 +142,9 @@ const KanjiSearch = memo(function KanjiSearch({
           <button
             onClick={() => setStatus("idle")}
             type="button"
-            className={"button button--icon-only search__close-button"}
+            className={"btn-icon search__close-button"}
           >
-            <XMarkIcon className="button__icon" />
+            <XMarkIcon className="icon" />
           </button>
         }
         { mainElement }
@@ -150,49 +154,53 @@ const KanjiSearch = memo(function KanjiSearch({
 
   return (
     <div className="search">
-      <div className="search__box">
-        <div className="search__input-box">
-          <input 
-            type="text" 
-            className="search__input"
-            onChange={handleInputChange}
-            value={input}
-            ref={inputboxRef}
-            />
-          {input.length > 0 && 
-            <ClearButton
-              setInput={setInput}
-              inputElementRef={inputboxRef}
-              className="search__clear-button"
-            />
-          }
-        </div>
-        <button 
-          type="button"
-          onClick={handleSearchButtonClick}
-          disabled={(!input.length || (status === "loading")) ? true : false}
-          >
-          Get kanji
-        </button>
-        <div className="search__toggle-def">
-          <label className="search__toggle-def-label">
+      <div className="search__container">
+        <div className="search__box">
+          <div className="search__input-box">
             <input 
-              type="checkbox" 
-              className="search__toggle-def-check"
-              onChange={() => setShowDefinition(s => !s)}
-            />
-            Show definitions
-          </label>
+              type="text" 
+              className="search__input"
+              onChange={handleInputChange}
+              value={input}
+              ref={inputboxRef}
+              />
+            {input.length > 0 && 
+              <ClearButton
+                setInput={setInput}
+                inputElementRef={inputboxRef}
+                className="btn-icon search__clear-button"
+              />
+            }
+          </div>
+          <button 
+            className={`button search__get-button${(status === "loading") ? ' loading' : ''}`}
+            type="button"
+            onClick={handleSearchButtonClick}
+            disabled={(!input.length || (status === "loading")) ? true : false}
+            >
+            {(status === "loading") ? "Loading..." : "Get Kanji"}
+            {<ArrowIcon className="button__icon"/>}
+          </button>
+          <div className="search__toggle-def">
+            <label className="search__toggle-label">
+              <input 
+                type="checkbox" 
+                className="search__toggle-def-check"
+                onChange={() => setShowDefinition(s => !s)}
+              />
+              <span className="search__toggle-def-display">Show definitions</span>
+            </label>
+          </div>
         </div>
+
+        {(status !== "idle" && status !== "loading") && showResults()}
+
+        {status === "loading" && (
+          <div className="search__loader">
+            <div className="search__loader-icon"></div>
+          </div>
+        )}
       </div>
-
-      {(status !== "idle" && status !== "loading") && showResults()}
-
-      {status === "loading" && (
-        <div className="search__loader">
-          <div className="search__loader-icon"></div>
-        </div>
-      )}
     </div>
   );
 });

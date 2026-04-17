@@ -6,19 +6,19 @@ type FaveType<ValueType> = {
   value: ValueType;
   setFavorites: React.Dispatch<React.SetStateAction<ValueType[]>>;
   disabled: boolean;
-  isIconOnly?: boolean;
   className?: string;
+  hideCheck?: boolean;
 }
 
 function FaveButton<T>({ 
   value,
   setFavorites,
   disabled,
-  isIconOnly,
   className,
+  hideCheck,
 } : FaveType<T>) {
   const [faveButtonText, setfaveButtonText] = useState<"Save" | "Saved!">("Save");
-	const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="button__icon" /> : <CheckIcon className="button__icon" />;
+	const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="icon" /> : <CheckIcon className="icon" />;
   
   function addToFavorites() {
 		setFavorites((faves) => {
@@ -36,11 +36,10 @@ function FaveButton<T>({
     <button
       onClick={addToFavorites}
       type="button"
-      className={`button ${isIconOnly && 'button--small'} ${className}`}
+      className={`btn-icon${className ? ' ' + className : ''}`}
       disabled={disabled}
     >
-      {!isIconOnly && faveButtonText}
-      {faveButtonIcon}
+      {hideCheck ? <HeartIcon className="icon" /> : faveButtonIcon}
     </button>
   );
 }

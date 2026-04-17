@@ -1,0 +1,125 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  90% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* https://cssloaders.github.io/ */
+
+@keyframes mul-shd-spin {
+  0%,
+  100% {
+    box-shadow:
+      0 -2.6em 0 0 clr.$lightblue,
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 50%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 70%);
+  }
+
+  12.5% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 70%),
+      1.8em -1.8em 0 0 clr.$lightblue,
+      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 50%);
+  }
+
+  25% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 50%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 70%),
+      2.5em 0 0 0 clr.$lightblue,
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+  }
+
+  37.5% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 50%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 70%),
+      1.75em 1.75em 0 0 clr.$lightblue,
+      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+  }
+
+  50% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 50%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 70%),
+      0 2.5em 0 0 clr.$lightblue,
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+  }
+
+  62.5% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 50%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 70%),
+      -1.8em 1.8em 0 0 clr.$lightblue,
+      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+  }
+
+  75% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 50%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 70%),
+      -2.6em 0 0 0 clr.$lightblue,
+      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+  }
+
+  87.5% {
+    box-shadow:
+      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
+      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
+      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 50%),
+      -2.6em 0 0 0 rgba(clr.$lightblue, 70%),
+      -1.8em -1.8em 0 0 clr.$lightblue;
+  }
+}
