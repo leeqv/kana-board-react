@@ -1,0 +1,64 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+.kanji-card {
+  position: relative;
+
+  &__btn {
+    border: 1px solid clr.$text;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 170px;
+    height: 100%;
+    background: clr.$white;
+    transition: 0.2s ease;
+    cursor: pointer;
+    @include mq.sp {
+      padding: 6px 12px;
+    }
+
+    &:hover {
+      background: clr.$gray-de;
+    }
+  }
+
+  &__kanji {
+    display: block;
+    font: fw.$medium 18px ff.$noto;
+    @include mq.sp {
+      font-size: 14px;
+    }
+  }
+
+  &__def {
+    display: block;
+    align-content: center;
+    height: 100%;
+    font-size: 14px;
+    @include mq.sp {
+      font-size: 12px;
+    }
+  }
+
+  &__fave {
+    margin: 4px auto 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 28px;
+
+    svg {
+      width: 58%;
+    }
+  }
+}

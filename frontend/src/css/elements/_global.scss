@@ -1,0 +1,112 @@
+@use '../settings/color' as clr;
+@use '../settings/font-family' as ff;
+@use '../settings/font-weight' as fw;
+@use '../settings/screen-sizes' as sz;
+@use '../tools/media-queries' as mq;
+@use '../tools/function' as fn;
+@use '../tools/mixin' as mxn;
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  background: clr.$gray-f6;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: clr.$text;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul,
+ol,
+div {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  width: 100%;
+  overflow-x: clip;
+}
+
+main,
+aside {
+  width: 100%;
+}
+
+main {
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+aside {
+  position: relative;
+  z-index: 3;
+  max-width: 250px;
+  transition: 0.3s ease;
+  @include mq.sp {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &.hidden {
+    @include mq.pc {
+      padding-inline: 0;
+      max-width: 0;
+    }
+
+    .drawer {
+      @include mq.sp {
+        transform: translateY(0);
+      }
+    }
+
+    .drawer__toggle {
+      @include mq.sp {
+        top: -70px;
+      }
+    }
+  }
+
+  .drawer {
+    @include mq.sp {
+      transform: translateY(-34vh);
+    }
+  }
+}
+
+textarea,
+input,
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+textarea,
+input {
+  &:focus {
+    outline: 2px solid rgba($color: clr.$lightblue, $alpha: 60%);
+  }
+}

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import './App.css'
+import './css/main.scss'
 import Board from './components/Board'
 import Drawer from './components/Drawer'
 import type { KanjiDictItem } from './types/KanjiDictItem';
@@ -23,6 +23,7 @@ function App() {
           text={text}
           setText={setText}
           textareaRef={textareaRef}
+          favoriteKanjis={favoriteKanjis}
         />
       </main>
       
