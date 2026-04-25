@@ -50,6 +50,9 @@ const KanjiSearch = memo(function KanjiSearch({
       ||
       // ...or when the results list is still empty.
       (status === "idle")
+      ||
+      // allow re-try after connection error
+      (status === "connection-error")
     ) {
       previousInputRef.current = input
 
