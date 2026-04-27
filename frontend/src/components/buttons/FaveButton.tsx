@@ -1,13 +1,12 @@
-import { useState } from "react";
 import HeartIcon from "../icons/HeartIcon";
-import CheckIcon from "../icons/CheckIcon";
+import ButtonWithTooltip from "./ButtonWithTooltip";
 
 type FaveType<ValueType> = {
   value: ValueType;
   setFavorites: React.Dispatch<React.SetStateAction<ValueType[]>>;
-  disabled: boolean;
+  disabled?: boolean;
   className?: string;
-  hideCheck?: boolean;
+  isFavorite?: boolean;
 }
 
 function FaveButton<T>({ 
@@ -15,32 +14,27 @@ function FaveButton<T>({
   setFavorites,
   disabled,
   className,
-  hideCheck,
+  isFavorite,
 } : FaveType<T>) {
-  const [faveButtonText, setfaveButtonText] = useState<"Save" | "Saved!">("Save");
-	const faveButtonIcon = faveButtonText === "Save" ? <HeartIcon className="icon" /> : <CheckIcon className="icon" />;
-  
-  function addToFavorites() {
-		setFavorites((faves) => {
+  function setter() {
+    setFavorites((faves) => {
 			if (!faves.includes(value)) {
 				return [...faves, value];
 			} else {
-				return faves;
+				return faves.filter(f => f !== value);
 			}
 		})
-		setfaveButtonText("Saved!");
-		setTimeout(() => setfaveButtonText("Save"), 2000);
-	}
+  }
 
   return (
-    <button
-      onClick={addToFavorites}
-      type="button"
-      className={`btn-icon${className ? ' ' + className : ''}`}
+    <ButtonWithTooltip
+      clickHandler={setter}
       disabled={disabled}
-    >
-      {hideCheck ? <HeartIcon className="icon" /> : faveButtonIcon}
-    </button>
+      className={className}
+      isFavorite={isFavorite}
+      type="Favorites"
+      Icon={HeartIcon}
+    />
   );
 }
 

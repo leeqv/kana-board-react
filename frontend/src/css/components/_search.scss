@@ -50,10 +50,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 26px;
-    @include mq.sp {
-      right: 6px;
-    }
+    right: 6px;
   }
 
   &__get-button {

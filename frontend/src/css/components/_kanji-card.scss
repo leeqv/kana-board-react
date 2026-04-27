@@ -23,6 +23,7 @@
     background: clr.$white;
     transition: 0.2s ease;
     cursor: pointer;
+    aspect-ratio: unset;
     @include mq.sp {
       padding: 6px 12px;
     }

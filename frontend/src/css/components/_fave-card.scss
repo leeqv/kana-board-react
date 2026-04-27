@@ -43,4 +43,9 @@
     display: flex;
     gap: 4px;
   }
+
+  &__fave {
+    margin: 0;
+    position: static;
+  }
 }
