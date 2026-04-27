@@ -1,10 +1,11 @@
-import { memo, useState } from "react";
+import { memo, useState, type MouseEvent } from "react";
 import CopyButton from "./buttons/CopyButton";
-import XMarkIcon from "./icons/XMarkIcon";
 import ShowDrawerButton from "./ShowDrawerButton";
 import type { KanjiDictItem } from "../types/KanjiDictItem";
 import InsertIcon from "./icons/InsertIcon";
 import insertToText from "../utils/insertToText";
+import FaveButton from "./buttons/FaveButton";
+import ButtonWithTooltip from "./buttons/ButtonWithTooltip";
 
 type DrawerType = {
   setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
@@ -24,14 +25,6 @@ const Drawer = memo(function Drawer({
   textareaRef,
 } : DrawerType) {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
-  
-  function handleDelete(fave: string) {
-    setFavorites(oldFaves => oldFaves.filter(el => el !== fave));
-  }
-
-  function handleDeleteKanji(fave: KanjiDictItem) {
-    setFavoriteKanjis(oldFaves => oldFaves.filter(el => el.kanji !== fave.kanji));
-  }
 
   return (
     <aside className={drawerVisibility ? '' : 'hidden'} >
@@ -55,19 +48,20 @@ const Drawer = memo(function Drawer({
                     {fave}
                   </div>
                   <div className="fave-card__actions">
-                    <button 
-                      className="btn-icon"
-                      onMouseDown={(e) => insertToText(e, fave, textareaRef, setText)}
-                      >
-                      <InsertIcon className="icon"/>
-                    </button>
+                    <ButtonWithTooltip
+                      mouseDownHandler={(e: MouseEvent<HTMLButtonElement>) => {
+                        if (e.button !== 0) return;
+                        insertToText(e, fave, textareaRef, setText)}}
+                      type="Insert"
+                      Icon={InsertIcon}
+                    />
                     <CopyButton text={fave} isIconOnly={true}/>
-                    <button 
-                      className="btn-icon"
-                      onClick={() => handleDelete(fave)}
-                      >
-                      <XMarkIcon className="icon"/>
-                    </button>
+                    <FaveButton<string>
+                      value={fave}
+                      setFavorites={setFavorites}
+                      className="kanji-card__fave fave-card__fave"
+                      isFavorite={true}
+                      />
                   </div>
                 </div>
               ))}
@@ -79,9 +73,11 @@ const Drawer = memo(function Drawer({
               {favoriteKanjis.length > 0 && (<h3 className="drawer__heading">Kanji</h3>)}
 
               <div>
-                {favoriteKanjis.map((fave, index) => (
+                {favoriteKanjis.map(fave => (
                   <div 
-                    key={index}
+                    // key={index}
+                    // index is not advisable as key if the array changes ("Keys tell React which array item each component corresponds to, so that it can match them up later." - React docs)
+                    key={fave.kanji}
                     className="fave-card"
                   >
                     <div className="fave-card__text">
@@ -89,19 +85,21 @@ const Drawer = memo(function Drawer({
                       <div className="fave-card__def">{fave.definition}</div>
                     </div>
                     <div className="fave-card__actions">
-                      <button 
-                        className="btn-icon"
-                        onMouseDown={(e) => insertToText(e, fave.kanji, textareaRef, setText)}
-                        >
-                        <InsertIcon className="icon"/>
-                      </button>
+                      <ButtonWithTooltip
+                        mouseDownHandler={(e: MouseEvent<HTMLButtonElement>) => {
+                          if (e.button !== 0) return;
+                          insertToText(e, fave.kanji, textareaRef, setText)
+                        }}
+                        type="Insert"
+                        Icon={InsertIcon}
+                      />
                       <CopyButton text={fave.kanji} isIconOnly={true}/>
-                      <button 
-                        className="btn-icon"
-                        onClick={() => handleDeleteKanji(fave)}
-                        >
-                        <XMarkIcon className="icon"/>
-                      </button>
+                      <FaveButton<KanjiDictItem>
+                        value={fave}
+                        setFavorites={setFavoriteKanjis}
+                        className="kanji-card__fave fave-card__fave"
+                        isFavorite={true}
+                      />
                     </div>
                   </div>
                 ))}

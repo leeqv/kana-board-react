@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
 import XMarkIcon from "../icons/XMarkIcon";
+import ButtonWithTooltip from "./ButtonWithTooltip";
 
 type ClearButtonType = {
   setInput: React.Dispatch<React.SetStateAction<string>>;
@@ -18,36 +18,14 @@ function ClearButton({
     inputElementRef.current?.focus();
 	}
 
-  const [show, setShow] = useState(false);
-  const timerRef = useRef<number | null>(null);
-
-  function showTooltip() {
-    timerRef.current = setTimeout(() => {
-      setShow(true);
-    }, 1000);
-  }
-
-  function hideTooltip() {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    setShow(false);
-  }
-  
-
   return (
-    <button
-      onClick={clearInput}
-      type="button"
-      className={`${className ? className : ''}`}
-      onMouseEnter={showTooltip}
-      onMouseLeave={hideTooltip}
-    >
-      <XMarkIcon className="icon" />
-      <span className={`btn-icon__tooltip ${!!show && 'show'}`}>
-        Clear text
-      </span>
-    </button>
+    <ButtonWithTooltip
+      clickHandler={clearInput}
+      
+      className={className}
+      type="Clear"
+      Icon={XMarkIcon}
+    />
   );
 }
 

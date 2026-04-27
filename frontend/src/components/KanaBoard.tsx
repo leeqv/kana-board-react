@@ -8,6 +8,7 @@ type KanaBoardType = {
   setText: React.Dispatch<React.SetStateAction<string>>;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
 	setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
+	favorites: string[];
 }
 
 function KanaBoard({
@@ -15,6 +16,7 @@ function KanaBoard({
   setText,
   textareaRef,
 	setFavorites,
+	favorites,
 } : KanaBoardType ) {
 
 	// We can just use rAF ref.current updates instead of using a ref for cursor index...
@@ -82,6 +84,7 @@ function KanaBoard({
 						setFavorites={setFavorites}
 						disabled={!text.length ? true : false}
 						className="btn-icon board__button board__button--fave"
+						isFavorite={favorites.some(item => item === text)}
 					/>
 				}
 			</div>

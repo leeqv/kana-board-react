@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CopyIcon from "../icons/CopyIcon";
 import CheckIcon from "../icons/CheckIcon";
+import ButtonWithTooltip from "./ButtonWithTooltip";
 
 type CopyType = {
   text: string;
@@ -29,15 +30,26 @@ function CopyButton({
 	}
 
   return (
-    <button
-      onClick={writeClipboardText}
-      type="button"
-      className={`${isIconOnly ? ' btn-icon' : 'button'}`}
-      disabled={!text.length ? true : false}
-    >
-      {!isIconOnly && copyButtonText} 
-      {copyButtonIcon}
-    </button>
+    ( isIconOnly ? (
+        <ButtonWithTooltip
+          clickHandler={writeClipboardText}
+          
+          
+          type="Copy"
+          Icon={CopyIcon}
+        />
+      ) : (
+        <button
+          onClick={writeClipboardText}
+          type="button"
+          className="button"
+          disabled={!text.length ? true : false}
+        >
+          {copyButtonText} 
+          {copyButtonIcon}
+        </button>
+      )
+    )
   );
 }
 

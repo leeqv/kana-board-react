@@ -24,6 +24,7 @@ function App() {
           setText={setText}
           textareaRef={textareaRef}
           favoriteKanjis={favoriteKanjis}
+          favorites={favorites}
         />
       </main>
       
