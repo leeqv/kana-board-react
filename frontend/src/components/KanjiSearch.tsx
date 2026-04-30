@@ -1,12 +1,12 @@
-import { memo, useRef, useState } from "react";
-import type { KanjiDictItem } from "../types/KanjiDictItem";
-import transliterate from "../utils/transliterate";
-import ClearButton from "./buttons/ClearButton";
-import KanjiCard from "./KanjiCard";
-import type { KanjiSearchStatus } from "../types/KanjiSearchStatus";
-import XMarkIcon from "./icons/XMarkIcon";
-import getJishoData from "../utils/getJishoData";
-import ArrowIcon from "./icons/ArrowIcon";
+import { memo, useRef, useState } from 'react';
+import type { KanjiDictItem } from '../types/KanjiDictItem';
+import transliterate from '../utils/transliterate';
+import ClearButton from './buttons/ClearButton';
+import KanjiCard from './KanjiCard';
+import type { KanjiSearchStatus } from '../types/KanjiSearchStatus';
+import XMarkIcon from './icons/XMarkIcon';
+import getJishoData from '../utils/getJishoData';
+import ArrowIcon from './icons/ArrowIcon';
 
 // Prop drilling for KanjiCard component...
 type KanjiSearchType = {
@@ -14,13 +14,13 @@ type KanjiSearchType = {
 
   // Modify text after picking kanji card
   setText: React.Dispatch<React.SetStateAction<string>>;
-  
+
   // Focus kana textarea after card click (mouse down)
   kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
 
   favoriteKanjis: KanjiDictItem[];
   setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
-}
+};
 
 // Memoize to prevent re-render when state in parent changes (will only re-render when props change)
 const KanjiSearch = memo(function KanjiSearch({
@@ -28,15 +28,15 @@ const KanjiSearch = memo(function KanjiSearch({
   kanaTextareaRef,
   setFavoriteKanjis,
   favoriteKanjis,
-} : KanjiSearchType) {
-  const [input, setInput] = useState("");
+}: KanjiSearchType) {
+  const [input, setInput] = useState('');
   const [results, setResults] = useState<KanjiDictItem[]>([]);
-  const [status, setStatus] = useState<KanjiSearchStatus>("idle");
+  const [status, setStatus] = useState<KanjiSearchStatus>('idle');
   const [showDefinition, setShowDefinition] = useState(false);
 
-	const inputboxRef = useRef<HTMLInputElement>(null);
-	const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
-	const previousInputRef = useRef<string>("");
+  const inputboxRef = useRef<HTMLInputElement>(null);
+  const cachedResultsRef = useRef<Record<string, KanjiDictItem[]>>({});
+  const previousInputRef = useRef<string>('');
   const previousInput = previousInputRef.current;
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -46,22 +46,20 @@ const KanjiSearch = memo(function KanjiSearch({
   async function handleSearchButtonClick() {
     if (
       // Get new result when the current query is different from the previous one...
-      (previousInput !== input)
-      ||
+      previousInput !== input ||
       // ...or when the results list is still empty.
-      (status === "idle")
-      ||
+      status === 'idle' ||
       // allow re-try after connection error
-      (status === "connection-error")
+      status === 'connection-error'
     ) {
-      previousInputRef.current = input
+      previousInputRef.current = input;
 
       // Reset results while loading
-      setStatus("loading");
+      setStatus('loading');
       setResults([]);
 
       let foundResult = [];
-      let foundError:unknown;
+      let foundError: unknown;
 
       /**
        * Option 1: Find kanji in cached results.
@@ -74,26 +72,24 @@ const KanjiSearch = memo(function KanjiSearch({
         /**
          * Option 2: Call Jisho API
          */
-        const [jishoResult, jishoError] = await getJishoData(
-          input,
-        );
+        const [jishoResult, jishoError] = await getJishoData(input);
         foundResult = jishoResult;
         foundError = jishoError;
         cachedResultsRef.current[input] = jishoResult;
       }
 
       if (foundResult && foundResult.length > 0) {
-        setStatus("success");
+        setStatus('success');
       } else if (foundError) {
         if (foundError instanceof Error) {
           console.error(foundError);
-          setStatus("connection-error");
+          setStatus('connection-error');
         } else {
-          console.error("Unknown error", foundError);
-          setStatus("unknown-error");
+          console.error('Unknown error', foundError);
+          setStatus('unknown-error');
         }
       } else {
-        setStatus("not-found");
+        setStatus('not-found');
       }
 
       setResults(foundResult);
@@ -103,54 +99,48 @@ const KanjiSearch = memo(function KanjiSearch({
   function showResults() {
     let mainElement;
 
-    if (status === "success") {
+    if (status === 'success') {
       mainElement = (
         <div className="search__results-list">
-          {
-            results.map((result, index) => 
-              <KanjiCard
-                key={index}
-                entry={result}
-                setText={setText}
-                kanaTextareaRef={kanaTextareaRef}
-                showDefinition={showDefinition}
-                setFavoriteKanjis={setFavoriteKanjis}
-                favoriteKanjis={favoriteKanjis}
-              />
-            )
-          }
+          {results.map((result, index) => (
+            <KanjiCard
+              key={index}
+              entry={result}
+              setText={setText}
+              kanaTextareaRef={kanaTextareaRef}
+              showDefinition={showDefinition}
+              setFavoriteKanjis={setFavoriteKanjis}
+              favoriteKanjis={favoriteKanjis}
+            />
+          ))}
         </div>
       );
     } else if (
-      status === "not-found" || 
-      status === "connection-error" || 
-      status === "unknown-error"
+      status === 'not-found' ||
+      status === 'connection-error' ||
+      status === 'unknown-error'
     ) {
       const infoDict = {
-        "not-found": `No results found for ${input}. Try something else. 😅`,
-        "connection-error": "Network connection failed. 😓",
-        "unknown-error": "Unknown error occurred. 😓",
-      }
+        'not-found': `No results found for ${input}. Try something else. 😅`,
+        'connection-error': 'Network connection failed. 😓',
+        'unknown-error': 'Unknown error occurred. 😓',
+      };
 
-      mainElement = (
-        <div className="search__info">
-          {infoDict[status]}
-        </div>
-      );
+      mainElement = <div className="search__info">{infoDict[status]}</div>;
     }
 
     return (
       <div className="search__results">
         {
           <button
-            onClick={() => setStatus("idle")}
+            onClick={() => setStatus('idle')}
             type="button"
-            className={"btn-icon search__close-button"}
+            className={'btn-icon search__close-button'}
           >
             <XMarkIcon className="icon" />
           </button>
         }
-        { mainElement }
+        {mainElement}
       </div>
     );
   }
@@ -160,45 +150,47 @@ const KanjiSearch = memo(function KanjiSearch({
       <div className="search__container">
         <div className="search__box">
           <div className="search__input-box">
-            <input 
-              type="text" 
+            <input
+              type="text"
               className="search__input"
               onChange={handleInputChange}
               value={input}
               ref={inputboxRef}
-              />
-            {input.length > 0 && 
+            />
+            {input.length > 0 && (
               <ClearButton
                 setInput={setInput}
                 inputElementRef={inputboxRef}
                 className="btn-icon search__clear-button"
               />
-            }
+            )}
           </div>
-          <button 
-            className={`button search__get-button${(status === "loading") ? ' loading' : ''}`}
+          <button
+            className={`button search__get-button${status === 'loading' ? ' loading' : ''}`}
             type="button"
             onClick={handleSearchButtonClick}
-            disabled={(!input.length || (status === "loading")) ? true : false}
-            >
-            {(status === "loading") ? "Loading..." : "Get Kanji"}
-            {<ArrowIcon className="button__icon"/>}
+            disabled={!input.length || status === 'loading' ? true : false}
+          >
+            {status === 'loading' ? 'Loading...' : 'Get Kanji'}
+            {<ArrowIcon className="button__icon" />}
           </button>
           <div className="search__toggle-def">
             <label className="search__toggle-label">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 className="search__toggle-def-check"
-                onChange={() => setShowDefinition(s => !s)}
+                onChange={() => setShowDefinition((s) => !s)}
               />
-              <span className="search__toggle-def-display">Show definitions</span>
+              <span className="search__toggle-def-display">
+                Show definitions
+              </span>
             </label>
           </div>
         </div>
 
-        {(status !== "idle" && status !== "loading") && showResults()}
+        {status !== 'idle' && status !== 'loading' && showResults()}
 
-        {status === "loading" && (
+        {status === 'loading' && (
           <div className="search__loader">
             <div className="search__loader-icon"></div>
           </div>

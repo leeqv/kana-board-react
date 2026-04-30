@@ -1,13 +1,10 @@
-
-async function getJishoData(
-  input: string,
-) {
+async function getJishoData(input: string) {
   /**
    * Option 2: Call Jisho API
-   * 
+   *
    * Need to use a backend as a middleman because browsers enforce CORS,
    * so React cannot call the Jisho API directly React ↔ Jisho API ❌
-   * 
+   *
    * const url = "https://jisho.org/api/v1/search/words?keyword=" + input;
    */
   const url = `http://localhost:8080/api?keyword=${input}`;
@@ -19,14 +16,9 @@ async function getJishoData(
     }
 
     const results = await response.json();
-    return [
-      results,
-    ]
+    return [results];
   } catch (error: unknown) {
-    return [
-      null,
-      error
-    ];
+    return [null, error];
   }
 }
 
