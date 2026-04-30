@@ -1,5 +1,5 @@
-import HeartIcon from "../icons/HeartIcon";
-import ButtonWithTooltip from "./ButtonWithTooltip";
+import HeartIcon from '../icons/HeartIcon';
+import ButtonWithTooltip from './ButtonWithTooltip';
 
 type FaveType<ValueType> = {
   value: ValueType;
@@ -7,23 +7,23 @@ type FaveType<ValueType> = {
   disabled?: boolean;
   className?: string;
   isFavorite?: boolean;
-}
+};
 
-function FaveButton<T>({ 
+function FaveButton<T>({
   value,
   setFavorites,
   disabled,
   className,
   isFavorite,
-} : FaveType<T>) {
+}: FaveType<T>) {
   function setter() {
     setFavorites((faves) => {
-			if (!faves.includes(value)) {
-				return [...faves, value];
-			} else {
-				return faves.filter(f => f !== value);
-			}
-		})
+      if (!faves.includes(value)) {
+        return [...faves, value];
+      } else {
+        return faves.filter((f) => f !== value);
+      }
+    });
   }
 
   return (

@@ -1,4 +1,4 @@
-import type { KanjiDictItem } from "./KanjiDictItem";
+import type { KanjiDictItem } from './KanjiDictItem';
 
 export type KanjiCardItem = {
   entry: KanjiDictItem;

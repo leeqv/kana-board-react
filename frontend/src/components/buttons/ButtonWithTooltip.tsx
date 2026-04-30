@@ -1,43 +1,35 @@
-import { 
-  useRef, 
-  useState, 
-  type ComponentType, 
-  type MouseEventHandler, 
+import {
+  useRef,
+  useState,
+  type ComponentType,
+  type MouseEventHandler,
   type ReactNode,
-} from "react";
+} from 'react';
 
 type ButtonWithTooltipType = {
   clickHandler?: () => void;
-  type: "Favorites" | "Copy" | "Clear" | "Insert";
+  type: 'Favorites' | 'Copy' | 'Clear' | 'Insert';
   Icon?: ComponentType<{ className?: string }>;
   mouseDownHandler?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   className?: string;
   isFavorite?: boolean;
   children?: ReactNode;
-}
+};
 
 const TOOLTIP_TEXTS: Record<string, string[]> = {
-  "Favorites": [
-    "Add to Favorites",
-    "Added to Favorites!",
-    "Remove from Favorites",
-    "Removed from Favorites!",
+  Favorites: [
+    'Add to Favorites',
+    'Added to Favorites!',
+    'Remove from Favorites',
+    'Removed from Favorites!',
   ],
-  "Copy": [
-    "Copy to Clipboard",
-    "Copied!",
-  ],
-  "Clear": [
-    "Clear",
-  ],
-  "Insert": [
-    "Insert to Text",
-    "Inserted!",
-  ]
-}
+  Copy: ['Copy to Clipboard', 'Copied!'],
+  Clear: ['Clear'],
+  Insert: ['Insert to Text', 'Inserted!'],
+};
 
-function ButtonWithTooltip({ 
+function ButtonWithTooltip({
   clickHandler,
   mouseDownHandler,
   disabled,
@@ -46,23 +38,25 @@ function ButtonWithTooltip({
   type,
   Icon,
   children,
-} : ButtonWithTooltipType) {
-  const defaultText = isFavorite ? TOOLTIP_TEXTS[type][2] : TOOLTIP_TEXTS[type][0];
+}: ButtonWithTooltipType) {
+  const defaultText = isFavorite
+    ? TOOLTIP_TEXTS[type][2]
+    : TOOLTIP_TEXTS[type][0];
 
   const [text, setText] = useState(defaultText);
   const [visible, setVisible] = useState(false);
 
-  const showTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const hideTimeoutRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const showTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hideTimeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   function tooltipHandler() {
     if (showTimeoutRef.current) {
       clearTimeout(showTimeoutRef.current);
     }
-    
+
     setText(isFavorite ? TOOLTIP_TEXTS[type][3] : TOOLTIP_TEXTS[type][1]);
     setVisible(true);
-  
+
     hideTimeoutRef.current = setTimeout(() => {
       setVisible(false);
     }, 2000);
@@ -72,8 +66,8 @@ function ButtonWithTooltip({
     if (clickHandler) {
       clickHandler();
     }
-		tooltipHandler();
-	}
+    tooltipHandler();
+  }
 
   const handleMouseEnter = () => {
     showTimeoutRef.current = setTimeout(() => {
