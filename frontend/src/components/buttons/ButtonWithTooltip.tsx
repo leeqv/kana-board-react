@@ -5,6 +5,7 @@ import {
   type MouseEventHandler,
   type ReactNode,
 } from 'react';
+import { TOOLTIP_TEXTS } from '../../constants/tooltipTexts';
 
 type ButtonWithTooltipType = {
   clickHandler?: () => void;
@@ -15,18 +16,6 @@ type ButtonWithTooltipType = {
   className?: string;
   isFavorite?: boolean;
   children?: ReactNode;
-};
-
-const TOOLTIP_TEXTS: Record<string, string[]> = {
-  Favorites: [
-    'Add to Favorites',
-    'Added to Favorites!',
-    'Remove from Favorites',
-    'Removed from Favorites!',
-  ],
-  Copy: ['Copy to Clipboard', 'Copied!'],
-  Clear: ['Clear'],
-  Insert: ['Insert to Text', 'Inserted!'],
 };
 
 function ButtonWithTooltip({
