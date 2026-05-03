@@ -1,14 +1,40 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './css/main.scss';
 import Board from './components/Board';
 import Drawer from './components/Drawer';
 import type { KanjiDictItem } from './types/KanjiDictItem';
+import { STORAGE_KEYS } from './constants/storageKeys';
+
+function getLocalFavorites() {
+  const item = localStorage.getItem(STORAGE_KEYS.favorites);
+  return item ? JSON.parse(item) : [];
+}
+
+function getLocalFavoriteKanjis() {
+  const item = localStorage.getItem(STORAGE_KEYS.favoriteKanjis);
+  return item ? JSON.parse(item) : [];
+}
 
 function App() {
   const [text, setText] = useState('');
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [favoriteKanjis, setFavoriteKanjis] = useState<KanjiDictItem[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Pass an initializer function (React saves the initial state once and ignores it on the next renders. React will only call it during initialization.) - from react.dev
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites);
+  const [favoriteKanjis, setFavoriteKanjis] = useState<KanjiDictItem[]>(
+    getLocalFavoriteKanjis,
+  );
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.favorites, JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      STORAGE_KEYS.favoriteKanjis,
+      JSON.stringify(favoriteKanjis),
+    );
+  }, [favoriteKanjis]);
 
   return (
     <>
