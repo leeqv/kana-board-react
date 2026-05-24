@@ -68,7 +68,7 @@ function KanaBoard({
           // onKeyUp={() => {cursorRef.current = textareaRef.current?.selectionStart || 0}}
           onBlur={handleTextareaBlur}
           className="board__textarea"
-          placeholder="Type in lowercase for hiragana. Type in UPPERCASE for katakana."
+          placeholder="lowercase ➡ ひらがな&#10;UPPERCASE ➡ カタカナ"
         />
         {text.length > 0 && (
           <ClearButton

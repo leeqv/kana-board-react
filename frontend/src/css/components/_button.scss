@@ -20,34 +20,43 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 120px;
+  width: 135px;
   font-family: inherit;
   font-size: 16px;
   font-weight: fw.$semibold;
   letter-spacing: 0.05em;
-  background-color: clr.$lightblue;
+  background-color: clr.$accent;
   color: clr.$white;
-  transition: 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    background-color 0.2s ease;
   transform: translateY(-2.5px);
-  filter: drop-shadow(0 5px 0 clr.$blue-6b);
+  filter: drop-shadow(0 5px 0 clr.$accent-dark);
   cursor: pointer;
   @include mq.sp {
+    width: 120px;
     font-size: 14px;
   }
 
   &:disabled {
-    background: clr.$gray-d2;
-    filter: drop-shadow(0 5px 0 clr.$gray-bc);
+    background: clr.$gray-disabled;
+    filter: drop-shadow(0 5px 0 clr.$gray-disabled2);
+  }
+
+  &:focus-visible {
+    border: 2px dashed clr.$gray-bg;
+    outline: none;
   }
 
   &:hover {
     transform: translateY(-4.5px);
-    filter: drop-shadow(0 7px 0 clr.$blue-6b);
-    background: clr.$blue-8d;
+    filter: drop-shadow(0 7px 0 clr.$accent-dark);
+    background: clr.$accent-light;
   }
 
   &:active {
-    filter: drop-shadow(0 0 0 clr.$blue-6b);
+    filter: drop-shadow(0 0 0 clr.$accent-dark);
     transform: translateY(2.5px);
   }
 
@@ -84,21 +93,24 @@
   border-radius: 50%;
   padding: 0;
   width: 34px;
+  height: fit-content;
   aspect-ratio: 1;
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease;
   cursor: pointer;
   background: none;
+  appearance: none;
   @include mxn.center;
   @include mq.sp {
     width: 28px;
   }
 
-  &:hover {
-    background: clr.$gray-de;
+  &:hover,
+  &:active {
+    background: clr.$accent-lightest;
   }
 
-  &:active {
-    background: clr.$gray;
+  &:focus-visible {
+    outline: 2px dashed rgba($color: clr.$accent, $alpha: 60%);
   }
 
   &.active {

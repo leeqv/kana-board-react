@@ -29,97 +29,103 @@
   0%,
   100% {
     box-shadow:
-      0 -2.6em 0 0 clr.$lightblue,
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 50%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 70%);
+      0 -2.6em 0 0 clr.$accent,
+      1.8em -1.8em 0 0 rgba(clr.$accent, 20%),
+      2.5em 0 0 0 rgba(clr.$accent, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 20%),
+      0 2.5em 0 0 rgba(clr.$accent, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 20%),
+      -2.6em 0 0 0 rgba(clr.$accent, 50%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 70%);
   }
 
   12.5% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 70%),
-      1.8em -1.8em 0 0 clr.$lightblue,
-      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 50%);
+      0 -2.6em 0 0 rgba(clr.$accent, 70%),
+      1.8em -1.8em 0 0 clr.$accent,
+      2.5em 0 0 0 rgba(clr.$accent, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 20%),
+      0 2.5em 0 0 rgba(clr.$accent, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 20%),
+      -2.6em 0 0 0 rgba(clr.$accent, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 50%);
   }
 
   25% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 50%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 70%),
-      2.5em 0 0 0 clr.$lightblue,
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+      0 -2.6em 0 0 rgba(clr.$accent, 50%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 70%),
+      2.5em 0 0 0 clr.$accent,
+      1.75em 1.75em 0 0 rgba(clr.$accent, 20%),
+      0 2.5em 0 0 rgba(clr.$accent, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 20%),
+      -2.6em 0 0 0 rgba(clr.$accent, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 20%);
   }
 
   37.5% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 50%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 70%),
-      1.75em 1.75em 0 0 clr.$lightblue,
-      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+      0 -2.6em 0 0 rgba(clr.$accent, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 50%),
+      2.5em 0 0 0 rgba(clr.$accent, 70%),
+      1.75em 1.75em 0 0 clr.$accent,
+      0 2.5em 0 0 rgba(clr.$accent, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 20%),
+      -2.6em 0 0 0 rgba(clr.$accent, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 20%);
   }
 
   50% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 50%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 70%),
-      0 2.5em 0 0 clr.$lightblue,
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 20%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+      0 -2.6em 0 0 rgba(clr.$accent, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 20%),
+      2.5em 0 0 0 rgba(clr.$accent, 50%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 70%),
+      0 2.5em 0 0 clr.$accent,
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 20%),
+      -2.6em 0 0 0 rgba(clr.$accent, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 20%);
   }
 
   62.5% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 50%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 70%),
-      -1.8em 1.8em 0 0 clr.$lightblue,
-      -2.6em 0 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+      0 -2.6em 0 0 rgba(clr.$accent, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 20%),
+      2.5em 0 0 0 rgba(clr.$accent, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 50%),
+      0 2.5em 0 0 rgba(clr.$accent, 70%),
+      -1.8em 1.8em 0 0 clr.$accent,
+      -2.6em 0 0 0 rgba(clr.$accent, 20%),
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 20%);
   }
 
   75% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 50%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 70%),
-      -2.6em 0 0 0 clr.$lightblue,
-      -1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%);
+      0 -2.6em 0 0 rgba(clr.$accent, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 20%),
+      2.5em 0 0 0 rgba(clr.$accent, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 20%),
+      0 2.5em 0 0 rgba(clr.$accent, 50%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 70%),
+      -2.6em 0 0 0 clr.$accent,
+      -1.8em -1.8em 0 0 rgba(clr.$accent, 20%);
   }
 
   87.5% {
     box-shadow:
-      0 -2.6em 0 0 rgba(clr.$lightblue, 20%),
-      1.8em -1.8em 0 0 rgba(clr.$lightblue, 20%),
-      2.5em 0 0 0 rgba(clr.$lightblue, 20%),
-      1.75em 1.75em 0 0 rgba(clr.$lightblue, 20%),
-      0 2.5em 0 0 rgba(clr.$lightblue, 20%),
-      -1.8em 1.8em 0 0 rgba(clr.$lightblue, 50%),
-      -2.6em 0 0 0 rgba(clr.$lightblue, 70%),
-      -1.8em -1.8em 0 0 clr.$lightblue;
+      0 -2.6em 0 0 rgba(clr.$accent, 20%),
+      1.8em -1.8em 0 0 rgba(clr.$accent, 20%),
+      2.5em 0 0 0 rgba(clr.$accent, 20%),
+      1.75em 1.75em 0 0 rgba(clr.$accent, 20%),
+      0 2.5em 0 0 rgba(clr.$accent, 20%),
+      -1.8em 1.8em 0 0 rgba(clr.$accent, 50%),
+      -2.6em 0 0 0 rgba(clr.$accent, 70%),
+      -1.8em -1.8em 0 0 clr.$accent;
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
   }
 }

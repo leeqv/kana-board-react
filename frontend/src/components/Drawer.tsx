@@ -57,7 +57,7 @@ const Drawer = memo(function Drawer({
                     <FaveButton<string>
                       value={fave}
                       setFavorites={setFavorites}
-                      className="kanji-card__fave fave-card__fave"
+                      className="fave-card__fave"
                       isFavorite={true}
                     />
                   </div>
@@ -99,7 +99,7 @@ const Drawer = memo(function Drawer({
                       <FaveButton<KanjiDictItem>
                         value={fave}
                         setFavorites={setFavoriteKanjis}
-                        className="kanji-card__fave fave-card__fave"
+                        className="fave-card__fave"
                         isFavorite={true}
                       />
                     </div>

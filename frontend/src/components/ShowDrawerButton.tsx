@@ -10,7 +10,6 @@ type ShowDrawerButtonType = {
 function ShowDrawerButton({
   drawerVisibility,
   setDrawerVisibility,
-  className,
 }: ShowDrawerButtonType) {
   function showDrawer() {
     setDrawerVisibility((v) => !v);
@@ -18,14 +17,14 @@ function ShowDrawerButton({
 
   return (
     <button className="drawer__toggle" onClick={showDrawer} type="button">
-      <span className={`drawer__toggle-btn-icon btn-icon ${className}`}>
+      Favorites
+      <span className="drawer__toggle-btn-icon">
         {drawerVisibility ? (
           <XMarkIcon className="icon" />
         ) : (
-          <HeartIcon className="icon" />
+          <HeartIcon className="icon active" />
         )}
       </span>
-      Favorites
     </button>
   );
 }
