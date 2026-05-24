@@ -38,8 +38,11 @@ function App() {
 
   return (
     <>
-      <header>
-        <h1>Kana-Board</h1>
+      <header className="header">
+        <div className="header__logo">
+          <span className="header__jp">かな·ボード</span>
+          <h1 className="header__title">Kana-Board</h1>
+        </div>
       </header>
 
       <main>

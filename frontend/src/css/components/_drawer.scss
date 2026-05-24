@@ -12,20 +12,23 @@
   top: 0;
   height: 100vh;
   min-width: 250px;
-  background: clr.$gray-f0;
+  background: clr.$gray-bg2;
   @include mq.sp {
-    border-radius: 24px 24px 0 0;
-    padding: 40px 0 0;
+    border-radius: 0;
+    padding: 0;
     position: relative;
     height: 34vh;
     transition: 0.2s ease;
+    background: none;
   }
 
   &__container {
     @include mq.sp {
-      padding-inline: 20px;
+      padding: 20px;
       height: 100%;
       overflow-y: auto;
+      background: clr.$gray-bg2;
+      pointer-events: auto;
     }
   }
 
@@ -37,45 +40,50 @@
   }
 
   &__heading {
-    margin-bottom: 10px;
-    font-size: 18px;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: fw.$medium;
     @include mq.sp {
       margin-bottom: 0;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 
   &__toggle {
-    border: 1px solid transparent;
-    border-radius: 8px;
+    border: none;
+    border-radius: 4px;
     position: fixed;
     top: 10px;
     right: 10px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    font-size: 10px;
-    padding: 4px;
+    font-size: 12px;
+    padding: 5px 10px;
     background: none;
     cursor: pointer;
     z-index: 999;
-    transition: 0.2s ease;
+    transition: background-color 0.2s ease;
+    line-height: 1em;
+    gap: 4px;
+    letter-spacing: 0.02em;
+    font-weight: fw.$medium;
     @include mq.sp {
+      margin-left: auto;
+      position: static;
+      border-radius: 8px 8px 0 0;
+      padding: 12px 18px;
       top: 10px;
-      background: clr.$gray-f0;
+      background: clr.$gray-bg2;
+      pointer-events: auto;
     }
 
-    &:hover {
-      border-color: rgba($color: clr.$lightblue, $alpha: 60%);
+    &:hover,
+    &:active {
+      background: clr.$accent-lightest;
     }
-  }
 
-  &__toggle-btn-icon {
-    border: 1px solid clr.$text;
-    border-radius: 50%;
-
-    &:hover {
-      background: none;
+    &:focus-visible {
+      outline: 2px dashed rgba($color: clr.$accent, $alpha: 60%);
     }
   }
 }

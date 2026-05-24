@@ -15,4 +15,10 @@
   path {
     stroke: clr.$text;
   }
+
+  &.active {
+    path {
+      fill: clr.$text;
+    }
+  }
 }
