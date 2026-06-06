@@ -7,12 +7,14 @@
 @use '../tools/mixin' as mxn;
 
 .drawer {
-  padding: 70px 24px 0;
+  padding: 50px 24px 0;
   position: sticky;
   top: 0;
   height: 100vh;
   min-width: 250px;
   background: clr.$gray-bg2;
+  overflow: hidden auto;
+  scrollbar-width: thin;
   @include mq.sp {
     border-radius: 0;
     padding: 0;
@@ -20,6 +22,7 @@
     height: 34vh;
     transition: 0.2s ease;
     background: none;
+    overflow: unset;
   }
 
   &__container {
@@ -59,7 +62,6 @@
     align-items: center;
     font-size: 12px;
     padding: 5px 10px;
-    background: none;
     cursor: pointer;
     z-index: 999;
     transition: background-color 0.2s ease;
@@ -67,6 +69,7 @@
     gap: 4px;
     letter-spacing: 0.02em;
     font-weight: fw.$medium;
+    background: clr.$gray-bg2;
     @include mq.sp {
       margin-left: auto;
       position: static;

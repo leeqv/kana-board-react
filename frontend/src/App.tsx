@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import './css/main.scss';
-import Board from './components/Board';
 import Drawer from './components/Drawer';
 import type { KanjiDictItem } from './types/KanjiDictItem';
 import { STORAGE_KEYS } from './constants/storageKeys';
+import KanaBoard from './components/KanaBoard';
+import KanjiSearch from './components/KanjiSearch';
 
 function getLocalFavorites() {
   const item = localStorage.getItem(STORAGE_KEYS.favorites);
@@ -46,14 +47,20 @@ function App() {
       </header>
 
       <main>
-        <Board
-          setFavorites={setFavorites}
-          setFavoriteKanjis={setFavoriteKanjis}
+        <KanaBoard
           text={text}
           setText={setText}
           textareaRef={textareaRef}
-          favoriteKanjis={favoriteKanjis}
+          setFavorites={setFavorites}
           favorites={favorites}
+        />
+
+        <KanjiSearch
+          // kanaCursorRef={cursorRef}
+          setText={setText}
+          kanaTextareaRef={textareaRef}
+          setFavoriteKanjis={setFavoriteKanjis}
+          favoriteKanjis={favoriteKanjis}
         />
       </main>
 
