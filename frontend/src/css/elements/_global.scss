@@ -56,6 +56,12 @@ main {
   display: flex;
   flex-direction: column;
   text-align: center;
+  overflow-y: auto;
+  height: 100vh;
+  scrollbar-width: thin;
+  @include mq.sp {
+    height: auto;
+  }
 }
 
 aside {
