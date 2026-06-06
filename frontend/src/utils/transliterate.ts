@@ -377,7 +377,6 @@ function transliterate(
   e:
     | React.ChangeEvent<HTMLTextAreaElement>
     | React.ChangeEvent<HTMLInputElement>,
-  // cursorRef: React.RefObject<number>,
   inputRef: React.RefObject<HTMLTextAreaElement | HTMLInputElement | null>,
   setOutput: React.Dispatch<React.SetStateAction<string>>,
   textTransform?: boolean,
@@ -406,23 +405,36 @@ function transliterate(
     }
   }
 
-  // Using ref also works instead of rAF ref.current updates... But we need to use useEffect in Board component
+  setOutput(output);
+
+  // 1. Using ref also works instead of rAF ref.current updates... But we need to use useEffect in Board component
   // cursorRef.current = newCursorPos;
 
   /**
-   * If we just do this without rAF, it will happen before re-render...
+   * 2. If we just do this without rAF, it will happen before re-render... (and without useEffect)
    * So it will change back to the end coz of re-render.
    * Recall: ref.current updates immediately (synchronous), state updates after next render (asynchronous)
    *
    * inputRef.current?.setSelectionRange(newCursorPos, newCursorPos);
    */
 
-  // requestAnimationFrame runs after the browser paints (after React has updated the DOM).
+  // 3. use requestAnimationFrame
+  // state changes ➡ react re-render (call Component()) ➡ DOM updates ➡ rAF runs ➡ browser paints
+  // rAF always runs right before browser paints next frame
   requestAnimationFrame(() => {
     inputRef.current?.setSelectionRange(newCursorPos, newCursorPos);
   });
 
-  setOutput(output);
+  // 4. useLayoutEffect
+  // immediately after React updates the DOM
+  // state changes ➡ react re-render (call Component()) ➡ DOM updates ➡ useLayoutEffect ➡ rAF runs ➡ browser paints
+  // especially useful if newCursorPos is ref or state
+  // useLayoutEffect(() => {
+  //   textareaRef.current?.setSelectionRange(
+  //     cursorPosRef.current,
+  //     cursorPosRef.current
+  //   );
+  // }, [text]);
 }
 
 export default transliterate;

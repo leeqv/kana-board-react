@@ -5,6 +5,10 @@ import type { KanjiDictItem } from './types/KanjiDictItem';
 import { STORAGE_KEYS } from './constants/storageKeys';
 import KanaBoard from './components/KanaBoard';
 import KanjiSearch from './components/KanjiSearch';
+import { TextContext } from './contexts/TextContext';
+import { TextareaRefContext } from './contexts/TextareaRefContext';
+import { FavoritesContext } from './contexts/FavoritesContext';
+import { KanjiFavoritesContext } from './contexts/KanjiFavoritesContext';
 
 function getLocalFavorites() {
   const item = localStorage.getItem(STORAGE_KEYS.favorites);
@@ -12,7 +16,7 @@ function getLocalFavorites() {
 }
 
 function getLocalFavoriteKanjis() {
-  const item = localStorage.getItem(STORAGE_KEYS.favoriteKanjis);
+  const item = localStorage.getItem(STORAGE_KEYS.kanjiFavorites);
   return item ? JSON.parse(item) : [];
 }
 
@@ -22,7 +26,7 @@ function App() {
 
   // Pass an initializer function (React saves the initial state once and ignores it on the next renders. React will only call it during initialization.) - from react.dev
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites);
-  const [favoriteKanjis, setFavoriteKanjis] = useState<KanjiDictItem[]>(
+  const [kanjiFavorites, setKanjiFavorites] = useState<KanjiDictItem[]>(
     getLocalFavoriteKanjis,
   );
 
@@ -32,47 +36,33 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem(
-      STORAGE_KEYS.favoriteKanjis,
-      JSON.stringify(favoriteKanjis),
+      STORAGE_KEYS.kanjiFavorites,
+      JSON.stringify(kanjiFavorites),
     );
-  }, [favoriteKanjis]);
+  }, [kanjiFavorites]);
 
   return (
-    <>
-      <header className="header">
-        <div className="header__logo">
-          <span className="header__jp">かな·ボード</span>
-          <h1 className="header__title">Kana-Board</h1>
-        </div>
-      </header>
+    <TextareaRefContext value={textareaRef}>
+      <TextContext value={{ text, setText }}>
+        <FavoritesContext value={{ favorites, setFavorites }}>
+          <KanjiFavoritesContext value={{ kanjiFavorites, setKanjiFavorites }}>
+            <header className="header">
+              <div className="header__logo">
+                <span className="header__jp">かな·ボード</span>
+                <h1 className="header__title">Kana-Board</h1>
+              </div>
+            </header>
 
-      <main>
-        <KanaBoard
-          text={text}
-          setText={setText}
-          textareaRef={textareaRef}
-          setFavorites={setFavorites}
-          favorites={favorites}
-        />
+            <main>
+              <KanaBoard />
+              <KanjiSearch />
+            </main>
 
-        <KanjiSearch
-          // kanaCursorRef={cursorRef}
-          setText={setText}
-          kanaTextareaRef={textareaRef}
-          setFavoriteKanjis={setFavoriteKanjis}
-          favoriteKanjis={favoriteKanjis}
-        />
-      </main>
-
-      <Drawer
-        favorites={favorites}
-        setFavorites={setFavorites}
-        favoriteKanjis={favoriteKanjis}
-        setFavoriteKanjis={setFavoriteKanjis}
-        setText={setText}
-        textareaRef={textareaRef}
-      />
-    </>
+            <Drawer />
+          </KanjiFavoritesContext>
+        </FavoritesContext>
+      </TextContext>
+    </TextareaRefContext>
   );
 }
 

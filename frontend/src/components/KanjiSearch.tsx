@@ -8,27 +8,7 @@ import XMarkIcon from './icons/XMarkIcon';
 import getJishoData from '../utils/getJishoData';
 import ArrowIcon from './icons/ArrowIcon';
 
-// Prop drilling for KanjiCard component...
-type KanjiSearchType = {
-  // kanaCursorRef: React.RefObject<number>;
-
-  // Modify text after picking kanji card
-  setText: React.Dispatch<React.SetStateAction<string>>;
-
-  // Focus kana textarea after card click (mouse down)
-  kanaTextareaRef: React.RefObject<HTMLTextAreaElement | null>;
-
-  favoriteKanjis: KanjiDictItem[];
-  setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
-};
-
-// Memoize to prevent re-render when state in parent changes (will only re-render when props change)
-const KanjiSearch = memo(function KanjiSearch({
-  setText,
-  kanaTextareaRef,
-  setFavoriteKanjis,
-  favoriteKanjis,
-}: KanjiSearchType) {
+const KanjiSearch = memo(function KanjiSearch() {
   const [input, setInput] = useState('');
   const [results, setResults] = useState<KanjiDictItem[]>([]);
   const [status, setStatus] = useState<KanjiSearchStatus>('idle');
@@ -106,11 +86,7 @@ const KanjiSearch = memo(function KanjiSearch({
             <KanjiCard
               key={index}
               entry={result}
-              setText={setText}
-              kanaTextareaRef={kanaTextareaRef}
               showDefinition={showDefinition}
-              setFavoriteKanjis={setFavoriteKanjis}
-              favoriteKanjis={favoriteKanjis}
             />
           ))}
         </div>

@@ -2,29 +2,19 @@ import { memo, useState, type MouseEvent } from 'react';
 import CopyButton from './buttons/CopyButton';
 import type { KanjiDictItem } from '../types/KanjiDictItem';
 import InsertIcon from './icons/InsertIcon';
-import insertToText from '../utils/insertToText';
 import FaveButton from './buttons/FaveButton';
 import ButtonWithTooltip from './buttons/ButtonWithTooltip';
 import XMarkIcon from './icons/XMarkIcon';
 import HeartIcon from './icons/HeartIcon';
+import { useInsertToText } from '../hooks/useInsertToText';
+import { useFavorites } from '../contexts/useFavorites';
+import { useKanjiFavorites } from '../contexts/useKanjiFavorites';
 
-type DrawerType = {
-  setFavorites: React.Dispatch<React.SetStateAction<string[]>>;
-  favorites: string[];
-  favoriteKanjis: KanjiDictItem[];
-  setFavoriteKanjis: React.Dispatch<React.SetStateAction<KanjiDictItem[]>>;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
-};
+const Drawer = memo(function Drawer() {
+  const insertToText = useInsertToText();
+  const { favorites, setFavorites } = useFavorites();
+  const { kanjiFavorites, setKanjiFavorites } = useKanjiFavorites();
 
-const Drawer = memo(function Drawer({
-  favorites,
-  setFavorites,
-  favoriteKanjis,
-  setFavoriteKanjis,
-  setText,
-  textareaRef,
-}: DrawerType) {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
   function toggleDrawerVisibility() {
     setDrawerVisibility((v) => !v);
@@ -62,7 +52,7 @@ const Drawer = memo(function Drawer({
                     <ButtonWithTooltip
                       mouseDownHandler={(e: MouseEvent<HTMLButtonElement>) => {
                         if (e.button !== 0) return;
-                        insertToText(e, fave, textareaRef, setText);
+                        insertToText(e, fave);
                       }}
                       type="Insert"
                       Icon={InsertIcon}
@@ -80,14 +70,14 @@ const Drawer = memo(function Drawer({
             </div>
           </section>
 
-          {favoriteKanjis.length > 0 && (
+          {kanjiFavorites.length > 0 && (
             <section className="drawer__section">
-              {favoriteKanjis.length > 0 && (
+              {kanjiFavorites.length > 0 && (
                 <h3 className="drawer__heading">Kanji</h3>
               )}
 
               <div>
-                {favoriteKanjis.map((fave) => (
+                {kanjiFavorites.map((fave) => (
                   <div
                     // key={index}
                     // index is not advisable as key if the array changes ("Keys tell React which array item each component corresponds to, so that it can match them up later." - React docs)
@@ -104,7 +94,7 @@ const Drawer = memo(function Drawer({
                           e: MouseEvent<HTMLButtonElement>,
                         ) => {
                           if (e.button !== 0) return;
-                          insertToText(e, fave.kanji, textareaRef, setText);
+                          insertToText(e, fave.kanji);
                         }}
                         type="Insert"
                         Icon={InsertIcon}
@@ -112,7 +102,7 @@ const Drawer = memo(function Drawer({
                       <CopyButton text={fave.kanji} isIconOnly={true} />
                       <FaveButton<KanjiDictItem>
                         value={fave}
-                        setFavorites={setFavoriteKanjis}
+                        setFavorites={setKanjiFavorites}
                         className="fave-card__fave"
                         isFavorite={true}
                       />
