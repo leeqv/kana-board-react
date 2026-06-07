@@ -41,6 +41,7 @@ const KanjiCard = memo(function KanjiCard({
         setFavorites={setKanjiFavorites}
         className="btn-icon kanji-card__fave"
         isFavorite={kanjiFavorites.some((item) => item.kanji === kanji)}
+        isEqual={(a, b) => a.kanji === b.kanji}
       />
     </div>
   );
