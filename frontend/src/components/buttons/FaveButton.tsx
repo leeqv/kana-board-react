@@ -7,6 +7,7 @@ type FaveType<ValueType> = {
   disabled?: boolean;
   className?: string;
   isFavorite?: boolean;
+  isEqual?: (a: ValueType, b: ValueType) => boolean;
 };
 
 function FaveButton<T>({
@@ -15,13 +16,23 @@ function FaveButton<T>({
   disabled,
   className,
   isFavorite,
+  isEqual,
 }: FaveType<T>) {
+  const compare = isEqual ?? ((a, b) => a === b);
+
   function setter() {
     setFavorites((faves) => {
-      if (!faves.includes(value)) {
+      // Array.includes and filter use strict equality, which compares objects by reference (not by contents).
+      // kanjiFavorites is from localStorage, value is from the Jisho API
+      // Though same Object { kanji: "赤", definition: "red" }, they are different object instances
+      
+      // if (!faves.includes(value)) {
+      if (!isFavorite) {
         return [...faves, value];
       } else {
-        return faves.filter((f) => f !== value);
+        // return faves.filter((f) => f !== value);
+        // So kanjiFavorites need a custom compare function by key (kanji)
+        return faves.filter((f) => !compare(f, value));
       }
     });
   }

@@ -104,7 +104,8 @@ const Drawer = memo(function Drawer() {
                         value={fave}
                         setFavorites={setKanjiFavorites}
                         className="fave-card__fave"
-                        isFavorite={true}
+                        isFavorite={kanjiFavorites.some((item) => item.kanji === fave.kanji)}
+                        isEqual={(a, b) => a.kanji === b.kanji}
                       />
                     </div>
                   </div>
