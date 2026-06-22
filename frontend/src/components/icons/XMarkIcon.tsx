@@ -8,9 +8,9 @@ function XMarkIcon({ className }: { className?: string }) {
     >
       <path
         d="M6 6L18 18M18 6L6 18"
-        stroke-width="1.75"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -82,7 +82,7 @@ const KanjiSearch = memo(function KanjiSearch() {
     if (status === 'success') {
       mainElement = (
         <div className="search__results-list">
-          {results.map(result => (
+          {results.map((result) => (
             <KanjiCard
               key={result.kanji}
               entry={result}

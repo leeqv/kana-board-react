@@ -8,8 +8,8 @@ import {
 import { TOOLTIP_TEXTS } from '../../constants/tooltipTexts';
 
 type ButtonWithTooltipType = {
-  clickHandler?: () => void;
   type: 'Favorites' | 'Copy' | 'Clear' | 'Insert';
+  clickHandler?: () => void;
   Icon?: ComponentType<{ className?: string }>;
   mouseDownHandler?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
