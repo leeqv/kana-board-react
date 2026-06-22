@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import CopyIcon from '../icons/CopyIcon';
-import CheckIcon from '../icons/CheckIcon';
 import ButtonWithTooltip from './ButtonWithTooltip';
 
 type CopyType = {
@@ -14,9 +13,22 @@ function CopyButton({ text, isIconOnly }: CopyType) {
   );
   const copyButtonIcon =
     copyButtonText === 'Copy' ? (
-      <CopyIcon className={`${isIconOnly ? ' icon' : 'button__icon'}`} />
+      <CopyIcon className={`${isIconOnly ? 'icon' : 'button__icon'}`} />
     ) : (
-      <CheckIcon className={`${isIconOnly ? ' icon' : 'button__icon'}`} />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="button__icon"
+      >
+        <path
+          d="M4 12.6111L8.92308 17.5L20 6.5"
+          stroke="#fff"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
     );
 
   async function writeClipboardText() {
@@ -44,7 +56,7 @@ function CopyButton({ text, isIconOnly }: CopyType) {
       onClick={writeClipboardText}
       type="button"
       className="button"
-      disabled={!text.length ? true : false}
+      disabled={!text.length}
     >
       {copyButtonText}
       {copyButtonIcon}

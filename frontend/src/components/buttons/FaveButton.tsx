@@ -4,11 +4,15 @@ import ButtonWithTooltip from './ButtonWithTooltip';
 type FaveType<ValueType> = {
   value: ValueType;
   setFavorites: React.Dispatch<React.SetStateAction<ValueType[]>>;
+  // value: string | KanjiDictItem;
+  // setFavorites: React.Dispatch<React.SetStateAction<(string | KanjiDictItem)[]>>;
   disabled?: boolean;
   className?: string;
   isFavorite?: boolean;
   isEqual?: (a: ValueType, b: ValueType) => boolean;
 };
+// Used generics to make sure types of value and setFavorites are matched with each other.
+// If used union type (string | KanjiDictItem), mismatched types would be allowed: value: string, setFavorites: KanjiDictItem.
 
 function FaveButton<T>({
   value,
