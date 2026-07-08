@@ -42,7 +42,7 @@ function KanaBoard() {
           <FaveButton<string>
             value={text}
             setFavorites={setFavorites}
-            disabled={!text.length ? true : false}
+            disabled={!text.length}
             className="btn-icon board__button board__button--fave"
             isFavorite={favorites.some((item) => item === text)}
           />

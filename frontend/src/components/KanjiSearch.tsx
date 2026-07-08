@@ -145,7 +145,7 @@ const KanjiSearch = memo(function KanjiSearch() {
             className={`button search__get-button${status === 'loading' ? ' loading' : ''}`}
             type="button"
             onClick={handleSearchButtonClick}
-            disabled={!input.length || status === 'loading' ? true : false}
+            disabled={!input.length || status === 'loading'}
           >
             {status === 'loading' ? 'Loading...' : 'Get Kanji'}
             {<ArrowIcon className="button__icon" />}
