@@ -70,7 +70,7 @@ app.get('/api', async (req, res) => {
     // https://expressjs.com/en/api.html#express.json
     // res.json(data);
     res.json(filteredData);
-  } catch {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });
   }
