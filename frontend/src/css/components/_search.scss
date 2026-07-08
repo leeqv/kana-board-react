@@ -51,6 +51,7 @@
     top: 0;
     bottom: 0;
     right: 6px;
+    animation: fade-in 0.3s ease;
   }
 
   &__get-button {
@@ -73,6 +74,7 @@
     padding: 10px 40px;
     width: fit-content;
     position: relative;
+    animation: fade-in 0.3s ease;
     @include mq.sp {
       padding-inline: 0;
     }

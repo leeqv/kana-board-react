@@ -18,6 +18,7 @@
   &__button {
     position: absolute;
     right: 8px;
+    animation: fade-in 0.3s ease;
 
     &--fave {
       bottom: 8px;

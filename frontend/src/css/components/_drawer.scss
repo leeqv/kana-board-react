@@ -61,7 +61,7 @@
     display: flex;
     align-items: center;
     font-size: 12px;
-    padding: 5px 10px;
+    padding: 10px 30px 10px 10px;
     cursor: pointer;
     z-index: 999;
     transition: background-color 0.2s ease;
@@ -72,9 +72,9 @@
     background: clr.$gray-bg2;
     @include mq.sp {
       margin-left: auto;
-      position: static;
+      position: relative;
       border-radius: 8px 8px 0 0;
-      padding: 12px 18px;
+      padding: 12px 30px 12px 18px;
       top: 10px;
       background: clr.$gray-bg2;
       pointer-events: auto;
@@ -87,6 +87,57 @@
 
     &:focus-visible {
       outline: 2px dashed rgba($color: clr.$accent, $alpha: 60%);
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transition: 0.3s ease-in-out;
+      width: 20px;
+      height: 20px;
+      @include mq.sp {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &::before {
+      right: 4px;
+      opacity: 1;
+      transform: scale(1);
+      background-image: url('../../../public/bookmark.svg');
+      @include mq.sp {
+        right: 8px;
+      }
+    }
+
+    &::after {
+      margin: auto;
+      right: 6px;
+      bottom: 0;
+      opacity: 0;
+      transform: scale(0);
+      background-image: url('../../../public/x-mark.svg');
+      @include mq.sp {
+        right: 8px;
+      }
+    }
+
+    &.active {
+      &::before {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      &::after {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   }
 }
