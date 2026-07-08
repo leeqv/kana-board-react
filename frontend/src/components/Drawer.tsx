@@ -4,8 +4,6 @@ import type { KanjiDictItem } from '../types/KanjiDictItem';
 import InsertIcon from './icons/InsertIcon';
 import FaveButton from './buttons/FaveButton';
 import ButtonWithTooltip from './buttons/ButtonWithTooltip';
-import XMarkIcon from './icons/XMarkIcon';
-import HeartIcon from './icons/HeartIcon';
 import { useInsertToText } from '../hooks/useInsertToText';
 import { useFavorites } from '../contexts/useFavorites';
 import { useKanjiFavorites } from '../contexts/useKanjiFavorites';
@@ -24,18 +22,11 @@ const Drawer = memo(function Drawer() {
     <aside className={drawerVisibility ? '' : 'hidden'}>
       <div className="drawer">
         <button
-          className="drawer__toggle"
+          className={`drawer__toggle${drawerVisibility ? ' active' : ''}`}
           onClick={toggleDrawerVisibility}
           type="button"
         >
           Favorites
-          <span className="drawer__toggle-btn-icon">
-            {drawerVisibility ? (
-              <XMarkIcon className="icon" />
-            ) : (
-              <HeartIcon className="icon active" />
-            )}
-          </span>
         </button>
 
         <div className="drawer__container">

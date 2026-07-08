@@ -89,12 +89,6 @@ aside {
         transform: translateY(-42px);
       }
     }
-
-    .drawer__toggle {
-      @include mq.sp {
-        top: -70px;
-      }
-    }
   }
 
   .drawer {

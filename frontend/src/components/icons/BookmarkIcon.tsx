@@ -1,4 +1,4 @@
-function HeartIcon({ className }: { className?: string }) {
+function BookmarkIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -15,4 +15,4 @@ function HeartIcon({ className }: { className?: string }) {
   );
 }
 
-export default HeartIcon;
+export default BookmarkIcon;

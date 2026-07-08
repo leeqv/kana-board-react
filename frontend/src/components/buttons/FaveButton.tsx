@@ -1,4 +1,4 @@
-import HeartIcon from '../icons/HeartIcon';
+import BookmarkIcon from '../icons/BookmarkIcon';
 import ButtonWithTooltip from './ButtonWithTooltip';
 
 type FaveType<ValueType> = {
@@ -29,7 +29,7 @@ function FaveButton<T>({
       // Array.includes and filter use strict equality, which compares objects by reference (not by contents).
       // kanjiFavorites is from localStorage, value is from the Jisho API
       // Though same Object { kanji: "赤", definition: "red" }, they are different object instances
-      
+
       // if (!faves.includes(value)) {
       if (!isFavorite) {
         return [...faves, value];
@@ -48,7 +48,7 @@ function FaveButton<T>({
       className={className}
       isFavorite={isFavorite}
       type="Favorites"
-      Icon={HeartIcon}
+      Icon={BookmarkIcon}
     />
   );
 }
