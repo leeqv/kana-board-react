@@ -36,6 +36,10 @@ app.use(cors(corsOptions));
 app.get('/api', async (req, res) => {
   try {
     const { keyword } = req.query;
+    if (!keyword) {
+      return res.status(400).json({ error: 'keyword query parameter is required' });
+    }
+    
     const kanjiResponse = await fetch(
       `https://jisho.org/api/v1/search/words?keyword=${keyword}`
     );
