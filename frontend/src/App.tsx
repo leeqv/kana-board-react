@@ -42,27 +42,56 @@ function App() {
   }, [kanjiFavorites]);
 
   return (
-    <TextareaRefContext value={textareaRef}>
-      <TextContext value={{ text, setText }}>
-        <FavoritesContext value={{ favorites, setFavorites }}>
-          <KanjiFavoritesContext value={{ kanjiFavorites, setKanjiFavorites }}>
-            <header className="header">
-              <div className="header__logo">
-                <span className="header__jp">かな·ボード</span>
-                <h1 className="header__title">Kana-Board</h1>
+    <>
+      <TextareaRefContext value={textareaRef}>
+        <TextContext value={{ text, setText }}>
+          <FavoritesContext value={{ favorites, setFavorites }}>
+            <KanjiFavoritesContext
+              value={{ kanjiFavorites, setKanjiFavorites }}
+            >
+              <div className="content">
+                <header className="header">
+                  <div className="header__logo">
+                    <span className="header__jp">かな·ボード</span>
+                    <h1 className="header__title">Kana-Board</h1>
+                  </div>
+                </header>
+                <main>
+                  <KanaBoard />
+                  <KanjiSearch />
+                </main>
+                <footer className="footer">
+                  <span>
+                    Uses API from&nbsp;
+                    <a
+                      href="https://jisho.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Jisho.org
+                      <img src="/jisho.svg" alt="" className="footer__icon" />
+                    </a>
+                  </span>
+                  <span className="footer__kaomoji">°˖✧◝( ᵔ ᵕ ᵔ )◜✧˖°</span>
+                  <span>
+                    View source on&nbsp;
+                    <a
+                      href="https://github.com/leeqv"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                      <img src="/github.svg" alt="" className="footer__icon" />
+                    </a>
+                  </span>
+                </footer>
               </div>
-            </header>
-
-            <main>
-              <KanaBoard />
-              <KanjiSearch />
-            </main>
-
-            <Drawer />
-          </KanjiFavoritesContext>
-        </FavoritesContext>
-      </TextContext>
-    </TextareaRefContext>
+              <Drawer />
+            </KanjiFavoritesContext>
+          </FavoritesContext>
+        </TextContext>
+      </TextareaRefContext>
+    </>
   );
 }
 

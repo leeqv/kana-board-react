@@ -1,4 +1,5 @@
 @use 'elements/global';
+@use 'elements/reset';
 
 @use 'components/icon';
 @use 'components/button';
@@ -8,5 +9,7 @@
 @use 'components/search';
 @use 'components/kanji-card';
 @use 'components/fave-card';
+@use 'components/footer';
+@use 'components/content';
 
 @use 'trumps/keyframes';

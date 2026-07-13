@@ -1,113 +1,29 @@
 @use '../settings/color' as clr;
 @use '../settings/font-family' as ff;
-@use '../settings/font-weight' as fw;
-@use '../settings/screen-sizes' as sz;
 @use '../tools/media-queries' as mq;
-@use '../tools/function' as fn;
-@use '../tools/mixin' as mxn;
 
-body {
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
-  background: clr.$gray-bg;
+html {
   font-family: ff.$noto;
+  font-size: 10px;
   line-height: 1.5;
   font-weight: 400;
   color: clr.$text;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-ul {
-  list-style-type: none;
-}
-
-ul,
-ol,
-div {
-  margin: 0;
-  padding: 0;
-}
-
 #root {
   display: flex;
   width: 100%;
-  overflow-x: clip;
-}
-
-main,
-aside {
-  width: 100%;
+  max-height: 100vh;
+  @include mq.sp {
+    max-height: unset;
+  }
 }
 
 main {
-  padding-top: 70px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  overflow-y: auto;
-  height: 100vh;
-  scrollbar-width: thin;
   @include mq.sp {
     height: auto;
-  }
-}
-
-aside {
-  position: relative;
-  z-index: 3;
-  max-width: 250px;
-  transition: 0.3s ease;
-  @include mq.sp {
-    position: fixed;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-width: 100%;
-    pointer-events: none;
-  }
-
-  &.hidden {
-    @include mq.pc {
-      padding-inline: 0;
-      max-width: 0;
-    }
-
-    .drawer {
-      @include mq.sp {
-        transform: translateY(-42px);
-      }
-    }
-  }
-
-  .drawer {
-    @include mq.sp {
-      transform: translateY(-265px);
-    }
-  }
-}
-
-textarea,
-input,
-button {
-  font-family: inherit;
-  color: inherit;
-}
-
-textarea,
-input {
-  &:focus {
-    outline: none;
   }
 }

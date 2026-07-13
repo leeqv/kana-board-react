@@ -97,9 +97,9 @@ const KanjiSearch = memo(function KanjiSearch() {
       status === 'unknown-error'
     ) {
       const infoDict = {
-        'not-found': `No results found for ${input}. Try something else. 😅`,
-        'connection-error': 'Network connection failed. 😓',
-        'unknown-error': 'Unknown error occurred. 😓',
+        'not-found': `No results found for ${input}. Try something else. (⌒_⌒; )`,
+        'connection-error': 'Network connection failed. (⇀‸↼‶)',
+        'unknown-error': 'Unknown error occurred. (⇀‸↼‶)',
       };
 
       mainElement = <div className="search__info">{infoDict[status]}</div>;

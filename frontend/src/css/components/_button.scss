@@ -1,9 +1,6 @@
 @use '../settings/color' as clr;
-@use '../settings/font-family' as ff;
 @use '../settings/font-weight' as fw;
-@use '../settings/screen-sizes' as sz;
 @use '../tools/media-queries' as mq;
-@use '../tools/function' as fn;
 @use '../tools/mixin' as mxn;
 
 .button-group {
@@ -39,11 +36,6 @@
     font-size: 14px;
   }
 
-  &:disabled {
-    background: clr.$gray-disabled;
-    filter: drop-shadow(0 5px 0 clr.$gray-disabled2);
-  }
-
   &:focus-visible {
     border: 2px dashed clr.$gray-bg;
     outline: none;
@@ -66,6 +58,8 @@
 
   &:disabled {
     pointer-events: none;
+    background: clr.$gray-disabled;
+    filter: drop-shadow(0 5px 0 clr.$gray-disabled2);
 
     .button__icon {
       opacity: 0.4;
@@ -137,6 +131,9 @@
     transition: 0.2s ease;
     background: clr.$text;
     z-index: 2;
+    @include mq.sp {
+      display: none;
+    }
 
     &::after {
       content: '';

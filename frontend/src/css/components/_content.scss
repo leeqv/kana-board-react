@@ -1,0 +1,11 @@
+@use '../settings/color' as clr;
+
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  background: clr.$gray-bg;
+}

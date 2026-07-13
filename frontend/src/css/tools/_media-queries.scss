@@ -1,41 +1,5 @@
 @use '../settings/screen-sizes' as sz;
 
-@mixin ie11 {
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    @content;
-  }
-}
-
-@mixin ios {
-  @supports (-webkit-touch-callout: none) {
-    @content;
-  }
-}
-
-@mixin mac {
-  @supports (font: -apple-system-body) {
-    @content;
-  }
-}
-
-@mixin minmax($min-width: 0, $max-width: 0) {
-  @media screen and (min-width: $min-width) and (max-width: $max-width) {
-    @content;
-  }
-}
-
-@mixin max($max-width: 0) {
-  @media screen and (max-width: $max-width) {
-    @content;
-  }
-}
-
-@mixin min($min-width: 0) {
-  @media screen and (min-width: $min-width) {
-    @content;
-  }
-}
-
 @mixin sp {
   @media screen and (max-width: sz.$sp-width) {
     @content;
@@ -44,18 +8,6 @@
 
 @mixin pc {
   @media screen and (min-width: sz.$sp-width) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media screen and (max-width: sz.$tab-width) {
-    @content;
-  }
-}
-
-@mixin max-height($max-height: 0) {
-  @media screen and (max-height: $max-height) {
     @content;
   }
 }
