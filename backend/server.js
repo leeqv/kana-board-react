@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 /**
  * Need to use a backend as a middleman because browsers enforce CORS,
@@ -10,21 +11,6 @@ const express = require('express');
  * (request ➡, response ⬅)
  */
 const app = express();
-
-/**
- * Fix CORS issues for browser ↔ server requests
- * 
- * CORS is a browser security feature: it blocks requests from frontend (React, localhost 5173) to backend (Express localhost 8080) if origins differ.
- * Server-side requests (Express ↔ Jisho API) are not affected.
- * 
- * CORS is a Node.js middleware for Express/Connect that sets CORS response headers. These headers tell browsers which origins can read responses from your server.
- * https://expressjs.com/en/resources/middleware/cors.html
- */
-const cors = require('cors');
-const corsOptions = {
-  origin: ['http://localhost:5173'],
-};
-app.use(cors(corsOptions));
 
 /**
  * Route
@@ -80,6 +66,17 @@ app.get('/api', async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
-  console.log('Server started on port 8080');
+/**
+ * This makes Express serve the frontend/dist React files directly, 
+ * so the same server handles both the API and the website.
+ */
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+/**
+ * Hosting platforms (like Render) assign the port dynamically via PORT env var at runtime.
+ * 8080 is only a fallback for local dev.
+ */
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });
