@@ -1,28 +1,58 @@
 @use '../settings/color' as clr;
-@use '../settings/font-family' as ff;
 @use '../settings/font-weight' as fw;
-@use '../settings/screen-sizes' as sz;
 @use '../tools/media-queries' as mq;
-@use '../tools/function' as fn;
-@use '../tools/mixin' as mxn;
 
 .drawer {
-  padding: 50px 24px 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  min-width: 250px;
-  background: clr.$gray-bg2;
-  overflow: hidden auto;
-  scrollbar-width: thin;
+  $p: &;
+
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  max-width: 250px;
+  transition:
+    max-width 0.3s ease,
+    padding-inline 0.3s ease;
+  overflow: hidden;
+  grid-area: 1 / 2 / 3;
   @include mq.sp {
-    border-radius: 0;
-    padding: 0;
-    position: relative;
-    height: 34vh;
-    transition: 0.2s ease;
-    background: none;
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    pointer-events: none;
     overflow: unset;
+    height: 34vh;
+    transition: transform 0.3s ease;
+    transform: translateY(-34vh);
+  }
+
+  &.hidden {
+    @include mq.pc {
+      padding-inline: 0;
+      max-width: 0;
+    }
+    @include mq.sp {
+      transform: translateY(-36px);
+    }
+  }
+
+  &__inner {
+    padding: 50px 24px 0;
+    position: sticky;
+    top: 0;
+    min-width: 250px;
+    height: 100%;
+    background: clr.$gray-bg2;
+    overflow: hidden auto;
+    scrollbar-width: thin;
+    @include mq.sp {
+      border-radius: 0;
+      padding: 0;
+      position: relative;
+      background: none;
+      overflow: unset;
+    }
   }
 
   &__container {
@@ -75,7 +105,7 @@
       position: relative;
       border-radius: 8px 8px 0 0;
       padding: 12px 30px 12px 18px;
-      top: 10px;
+      top: 0;
       background: clr.$gray-bg2;
       pointer-events: auto;
     }

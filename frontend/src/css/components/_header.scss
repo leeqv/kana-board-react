@@ -1,18 +1,16 @@
 @use '../settings/color' as clr;
 @use '../settings/font-family' as ff;
 @use '../settings/font-weight' as fw;
-@use '../settings/screen-sizes' as sz;
-@use '../tools/media-queries' as mq;
-@use '../tools/function' as fn;
-@use '../tools/mixin' as mxn;
 
 .header {
-  position: fixed;
+  position: sticky;
   padding: 14px;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 2;
+  background: rgba($color: clr.$gray-bg, $alpha: 60%);
+  backdrop-filter: blur(3px);
 
   &__logo {
     position: relative;

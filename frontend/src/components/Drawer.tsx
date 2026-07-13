@@ -19,8 +19,8 @@ const Drawer = memo(function Drawer() {
   }
 
   return (
-    <aside className={drawerVisibility ? '' : 'hidden'}>
-      <div className="drawer">
+    <aside className={`drawer${drawerVisibility ? '' : ' hidden'}`}>
+      <div className="drawer__inner">
         <button
           className={`drawer__toggle${drawerVisibility ? ' active' : ''}`}
           onClick={toggleDrawerVisibility}
