@@ -7,7 +7,8 @@ async function getJishoData(input: string) {
    *
    * const url = "https://jisho.org/api/v1/search/words?keyword=" + input;
    */
-  const url = `http://localhost:8080/api?keyword=${input}`;
+  // const url = `http://localhost:8080/api?keyword=${input}`;
+  const url = `/api?keyword=${input}`;
 
   try {
     const response = await fetch(url);
