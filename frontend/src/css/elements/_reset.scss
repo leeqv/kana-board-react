@@ -29,6 +29,10 @@ button {
   color: inherit;
 }
 
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 textarea,
 input {
   &:focus {

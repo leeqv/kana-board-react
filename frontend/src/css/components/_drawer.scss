@@ -16,7 +16,7 @@
   grid-area: 1 / 2 / 3;
   @include mq.sp {
     position: fixed;
-    top: 100%;
+    bottom: 0;
     left: 0;
     width: 100%;
     max-width: 100%;
@@ -24,7 +24,6 @@
     overflow: unset;
     height: 34vh;
     transition: transform 0.3s ease;
-    transform: translateY(-34vh);
   }
 
   &.hidden {
@@ -33,7 +32,7 @@
       max-width: 0;
     }
     @include mq.sp {
-      transform: translateY(-36px);
+      transform: translateY(calc(34vh - 36px));
     }
   }
 
@@ -50,6 +49,8 @@
       border-radius: 0;
       padding: 0;
       position: relative;
+      display: flex;
+      flex-direction: column;
       background: none;
       overflow: unset;
     }
@@ -58,7 +59,7 @@
   &__container {
     @include mq.sp {
       padding: 20px;
-      height: 100%;
+      flex: 1;
       overflow-y: auto;
       background: clr.$gray-bg2;
       pointer-events: auto;
@@ -105,7 +106,7 @@
       position: relative;
       border-radius: 8px 8px 0 0;
       padding: 12px 30px 12px 18px;
-      top: 0;
+      top: 1px;
       background: clr.$gray-bg2;
       pointer-events: auto;
     }
@@ -143,6 +144,7 @@
       background-image: url('../../../public/bookmark.svg');
       @include mq.sp {
         right: 8px;
+        top: -1px;
       }
     }
 
