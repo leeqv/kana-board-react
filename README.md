@@ -4,6 +4,8 @@ Online Japanese keyboard with romaji to hiragana and katakana transliteration, a
 
 React + TypeScript + Express rewrite of an older [Flask/jQuery version](https://github.com/leeqv/kana-board/) built for [CS50](https://www.edx.org/cs50).
 
+Live demo: [kana-board.onrender.com](https://kana-board.onrender.com)
+
 ## About The Project
 ```
 frontend/   React + TS app (Vite)
@@ -53,6 +55,38 @@ npm run preview       # Preview the production build locally
 ```
 
 Open `http://localhost:5173`.
+
+## Usage
+
+### Transliteration
+Type in romaji to get hiragana and katakana, then copy the result.
+
+<img src="media/romaji-to-kana.gif" height="300">
+
+### Kanji search
+Search the Jisho API and pick a kanji to include in your sentence.
+
+<img src="media/insert-kanji.gif" height="300">
+
+### Save phrases
+Add a phrase to favorites to use it for later.
+
+<img src="media/save-phrase.gif" height="300">
+
+### Save kanji
+Add a kanji to favorites to use it for later.
+
+<img src="media/save-kanji.gif" height="300">
+
+### Insert saved favorites
+Insert a saved phrase or kanji into your sentence.
+
+<img src="media/insert-favorites.gif" height="300">
+
+### Copy saved favorites
+Copy a saved phrase or kanji to your clipboard.
+
+<img src="media/copy-favorites.gif" height="300">
 
 ## Credits
 - Kanji search made possible using [Jisho.org](https://jisho.org/) API
