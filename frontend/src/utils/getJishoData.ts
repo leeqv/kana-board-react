@@ -17,9 +17,9 @@ async function getJishoData(input: string) {
     }
 
     const results = await response.json();
-    return [results];
+    return { results, error: null };
   } catch (error: unknown) {
-    return [null, error];
+    return { results: null, error };
   }
 }
 

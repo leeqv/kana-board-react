@@ -52,7 +52,8 @@ const KanjiSearch = memo(function KanjiSearch() {
         /**
          * Option 2: Call Jisho API
          */
-        const [jishoResult, jishoError] = await getJishoData(input);
+        const { results: jishoResult, error: jishoError } =
+          await getJishoData(input);
         foundResult = jishoResult;
         foundError = jishoError;
         cachedResultsRef.current[input] = jishoResult;

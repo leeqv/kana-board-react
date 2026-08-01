@@ -41,8 +41,32 @@ function App() {
     );
   }, [kanjiFavorites]);
 
+  const isNotFound = window.location.pathname !== '/';
+
+  // "React will always place the DOM element corresponding to the <title> component within the document’s <head>, regardless of where in the React tree it is rendered."
+  // https://react.dev/reference/react-dom/components/title#special-rendering-behavior
+
   return (
     <>
+      {isNotFound ? (
+        <>
+          <title>
+            404 - Page Not Found | Kana-Board: Online Japanese keyboard
+          </title>
+          <meta
+            name="description"
+            content="The page you are looking for does not exist."
+          ></meta>
+        </>
+      ) : (
+        <>
+          <title>Kana-Board: Online Japanese keyboard</title>
+          <meta
+            name="description"
+            content="Online Japanese keyboard with romaji to hiragana and katakana transliteration, and kanji search using the Jisho API."
+          />
+        </>
+      )}
       <TextareaRefContext value={textareaRef}>
         <TextContext value={{ text, setText }}>
           <FavoritesContext value={{ favorites, setFavorites }}>
@@ -51,14 +75,33 @@ function App() {
             >
               <div className="content">
                 <header className="header">
-                  <div className="header__logo">
-                    <span className="header__jp">かな·ボード</span>
-                    <h1 className="header__title">Kana-Board</h1>
-                  </div>
+                  {isNotFound ? (
+                    <a className="header__logo header__logo--link" href="/">
+                      <span className="header__jp">かな·ボード</span>
+                      <h1 className="header__title">Kana-Board</h1>
+                    </a>
+                  ) : (
+                    <div className="header__logo">
+                      <span className="header__jp">かな·ボード</span>
+                      <h1 className="header__title">Kana-Board</h1>
+                    </div>
+                  )}
                 </header>
                 <main>
-                  <KanaBoard />
-                  <KanjiSearch />
+                  {isNotFound ? (
+                    <div className="not-found">
+                      <h1 className="not-found__title">404 - Page Not Found</h1>
+                      <p>This page does not exist.</p>
+                      <a href="/" className="button not-found__button">
+                        Return Home
+                      </a>
+                    </div>
+                  ) : (
+                    <>
+                      <KanaBoard />
+                      <KanjiSearch />
+                    </>
+                  )}
                 </main>
                 <footer className="footer">
                   <span>
@@ -86,7 +129,7 @@ function App() {
                   </span>
                 </footer>
               </div>
-              <Drawer />
+              {!isNotFound ? <Drawer /> : ''}
             </KanjiFavoritesContext>
           </FavoritesContext>
         </TextContext>
