@@ -112,7 +112,11 @@ function App() {
                       rel="noopener noreferrer"
                     >
                       Jisho.org
-                      <img src="/jisho.svg" alt="" className="footer__icon" />
+                      <img
+                        src="/icons/jisho.svg"
+                        alt=""
+                        className="footer__icon"
+                      />
                     </a>
                   </span>
                   <span className="footer__kaomoji">°˖✧◝( ᵔ ᵕ ᵔ )◜✧˖°</span>
@@ -124,7 +128,11 @@ function App() {
                       rel="noopener noreferrer"
                     >
                       GitHub
-                      <img src="/github.svg" alt="" className="footer__icon" />
+                      <img
+                        src="/icons/github.svg"
+                        alt=""
+                        className="footer__icon"
+                      />
                     </a>
                   </span>
                 </footer>

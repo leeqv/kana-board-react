@@ -196,7 +196,8 @@
       left: 2px;
       width: 18px;
       aspect-ratio: 1;
-      background: url('../../../public/check.svg') no-repeat center / 100% 100%;
+      background: url('../../assets/icons/check.svg') no-repeat center / 100%
+        100%;
       clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
       transition: 0.3s ease;
       @include mq.sp {
