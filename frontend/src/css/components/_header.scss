@@ -18,6 +18,10 @@
     flex-direction: column;
     width: fit-content;
     cursor: default;
+
+    &--link {
+      cursor: pointer;
+    }
   }
 
   &__title {
