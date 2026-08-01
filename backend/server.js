@@ -73,6 +73,14 @@ app.get('/api', async (req, res) => {
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 /**
+ * Serve index.html with a 404 status when path is not matched above.
+ * expressjs.com/en/5x/starter/faq/#how-do-i-handle-404-responses
+ */
+app.use((_req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
+/**
  * Hosting platforms (like Render) assign the port dynamically via PORT env var at runtime.
  * 8080 is only a fallback for local dev.
  */
